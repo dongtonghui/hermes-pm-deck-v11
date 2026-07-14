@@ -229,7 +229,7 @@
       thumb.className = 'thumb';
       if (useScale != null) thumb.style.transform = 'scale(' + useScale + ')';
       const ifr = document.createElement('iframe');
-      ifr.src = item.file; ifr.setAttribute('scrolling', 'no');
+      ifr.src = 'slides/' + item.file; ifr.setAttribute('scrolling', 'no');
       thumb.appendChild(ifr); card.appendChild(thumb);
     }
     const num = document.createElement('div');
@@ -339,7 +339,7 @@
   function show(idx) {
     if (idx < 0 || idx >= deck.length) return;
     current = idx;
-    if (frame.getAttribute('src') !== deck[idx].file) frame.src = deck[idx].file;
+    if (frame.getAttribute('src') !== 'slides/' + deck[idx].file) frame.src = 'slides/' + deck[idx].file;
     counter.innerHTML = (idx + 1) + ' / ' + deck.length + ' <span class="label">' + (deck[idx].label || '') + '</span>';
     try { localStorage.setItem('deck-index-' + location.pathname, String(idx)); } catch (_) {}
     if (location.hash !== '#' + (idx + 1)) history.replaceState(null, '', '#' + (idx + 1));
@@ -384,7 +384,7 @@
   fit(); show(current);
   if (hashMatch) setMode('present'); else { setMode('overview'); buildOverview(); }
 
-  window.addEventListener('beforeprint', () => { printStack.innerHTML = ''; deck.forEach(item => { const f = document.createElement('iframe'); f.src = item.file; printStack.appendChild(f); }); printStack.style.display = 'block'; stage.style.display = 'none'; });
+  window.addEventListener('beforeprint', () => { printStack.innerHTML = ''; deck.forEach(item => { const f = document.createElement('iframe'); f.src = 'slides/' + item.file; printStack.appendChild(f); }); printStack.style.display = 'block'; stage.style.display = 'none'; });
   window.addEventListener('afterprint', () => { printStack.innerHTML = ''; printStack.style.display = 'none'; stage.style.display = ''; });
 })();
 </script>
