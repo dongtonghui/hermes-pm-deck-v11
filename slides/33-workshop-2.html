@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>33 · 实战一：多个 Agent 分析</title>
+<title>33 · 实战二：写一个 Skill</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/tokens.css">
 <style>
@@ -21,51 +21,55 @@
   .timer { background: var(--dark-block); color: #fff; border-radius: 12px; padding: 20px; text-align: center; margin-top: 20px; }
   .timer .num { font-family: var(--font-display); font-size: 48px; font-weight: 900; color: var(--accent-light); line-height: 1; }
   .timer p { font-size: var(--small); color: rgba(255,255,255,0.8); margin: 0; }
+  .skill-preview { background: var(--paper-warm); border-radius: 12px; padding: 20px; margin-top: 16px; }
+  .skill-preview pre { font-family: "SF Mono", monospace; font-size: 13px; color: var(--ink-secondary); line-height: 1.6; }
 </style>
 </head>
 <body>
 <div class="slide-content">
   <div class="page-masthead">
     <div class="brand">AI 工具深度应用</div>
-    <div>35 / 40 · 实战</div>
+    <div>33 / 37 · 实战</div>
   </div>
 
   <div class="main">
     <div class="header">
-      <div class="kicker" style="justify-content: center;">Workshop 01</div>
-      <h2>实战任务一：用多 Agent 模板分析一个<span class="accent">真实小需求</span></h2>
-      <p class="subtitle">5 分钟分组，体验一次"给目标 → 多角色分析 → 交叉校验 → 人做判断"的完整流程。</p>
+      <div class="kicker" style="justify-content: center;">Workshop 02</div>
+      <h2>实战任务二：封装一个<span class="accent">自己的 Skill</span></h2>
+      <p class="subtitle">把你每周重复做的一次工作，按 Anthropic 规范写出 SKILL.md 框架。</p>
     </div>
 
     <div class="workshop">
       <div class="card">
-        <h4>活儿</h4>
-        <p>选择一个简单硬件产品想法，例如：</p>
+        <h4>选题方向</h4>
+        <p>选择一个你每周至少做两次的重复性工作，例如：</p>
         <ul>
-          <li>智能花盆（自动浇水 + 光照监测）</li>
-          <li>桌面空气净化器</li>
-          <li>便携咖啡加热杯</li>
-          <li>你手边的真实项目</li>
+          <li>竞品动态监控</li>
+          <li>用户反馈分类</li>
+          <li>PRD 初稿生成</li>
+          <li>周报数据整理</li>
+          <li>会议纪要的 action items 提取</li>
         </ul>
       </div>
       <div class="card">
-        <h4>分组与步骤</h4>
+        <h4>活儿</h4>
         <ul>
-          <li>分成 4 组：用户 / 技术 / 商业 / 竞品</li>
-          <li>每组用 2 分钟写一个视角分析</li>
-          <li>用 1 分钟互相挑战，找漏洞</li>
-          <li>用 1 分钟给出最终判断：这个功能做不做？</li>
+          <li>写出 Skill 名称和 description</li>
+          <li>定义输入字段</li>
+          <li>列出 3-5 个工作流步骤</li>
+          <li>描述输出格式</li>
+          <li>标注一个注意事项</li>
         </ul>
         <div class="timer">
-          <div class="num">5 min</div>
-          <p>倒计时</p>
+          <div class="num">3 min</div>
+          <p>先完成框架，本周再完善</p>
         </div>
       </div>
     </div>
   </div>
 
   <div class="page-footer">
-    <div class="section-tag">实战 · 多个 Agent</div>
+    <div class="section-tag">实战 · Skill</div>
     <div>AI 工具在硬件产品工作中的深度应用</div>
   </div>
 </div>

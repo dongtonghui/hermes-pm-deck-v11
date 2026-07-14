@@ -1,13 +1,13 @@
-# AI 工具在硬件产品工作中的深度应用 · V10
+# AI 工具在硬件产品工作中的深度应用 · V11
 
 一份面向硬件产品经理的 60 分钟内部分享课件，共 37 页，采用纯 HTML 幻灯片形式。
 
-**在线演示**：https://dongtonghui.github.io/hermes-pm-deck-v9/
+**在线演示**：https://dongtonghui.github.io/hermes-pm-deck-v11/
 
 ## 目录结构
 
 - `index.html` — 幻灯片聚合器（网格概览 + 单页演示）
-- `slides/` — 35 页独立 HTML 幻灯片
+- `slides/` — 37 页独立 HTML 幻灯片
 - `shared/` — 共享样式 `tokens.css`
 - `scripts/` — 缩略图 / PDF 导出脚本
 - `thumbs/` — 无限画廊概览用的缩略图
@@ -37,6 +37,6 @@ npm run pdf      # 导出 PDF
 
 ```bash
 git add .
-git commit -m "v9 slides"
+git commit -m "v11 slides"
 git push -u origin main
 ```
