@@ -1,82 +1,43 @@
-
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>9 · 最近 1 年 AI 工具演进</title>
+<title>08 · 最近 1 年 AI 工具演进 · 曲线版</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/tokens.css">
 <style>
   body { background: var(--tech-bg); color: #fff; }
   .slide-content { display: flex; flex-direction: column; }
-  .main { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-  .header { margin-bottom: 36px; }
-  .header h2 { color: #fff; font-size: 70px; margin-bottom: 16px; }
+  .main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 72px; margin-bottom: 60px; }
+  
+  .header { margin-bottom: 44px; }
+  .header h2 { color: #fff; font-size: 72px; margin-bottom: 16px; }
   .header h2 .accent { color: var(--accent-light); }
-  .header .subtitle { color: rgba(255,255,255,0.72); font-size: 27px; max-width: 1100px; }
-
-  .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; position: relative; }
-  .timeline::before {
-    content: "";
-    position: absolute;
-    top: 18px;
-    left: 5%;
-    right: 5%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-light), var(--accent-dark));
-    border-radius: 3px;
-  }
-  .phase { position: relative; z-index: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 16px; padding: 28px; }
-  .phase::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: -28px;
-    transform: translateX(-50%);
-    width: 18px;
-    height: 18px;
-    background: var(--accent);
-    border-radius: 50%;
-    box-shadow: 0 0 0 6px rgba(196,92,38,0.2);
-  }
-  .phase .date { font-size: var(--tiny); color: rgba(255,255,255,0.5); margin-bottom: 10px; letter-spacing: 0.05em; text-align: center; }
-  .phase .version { font-family: var(--font-display); font-size: 28px; font-weight: 900; color: var(--accent-light); margin-bottom: 8px; text-align: center; }
-  .phase .theme { font-family: var(--font-body); font-size: 21px; color: #fff; margin-bottom: 16px; text-align: center; }
-  .phase .changes { display: flex; flex-direction: column; gap: 8px; }
-  .phase .changes span { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 8px 12px; font-size: var(--tiny); color: rgba(255,255,255,0.85); line-height: 1.45; }
-  .phase .changes span strong { color: var(--accent-light); font-weight: 600; }
-
-  .hermes-row {
-    margin-top: 32px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 16px;
-    padding: 24px 32px;
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-  }
-  .hermes-row .icon { width: 48px; height: 48px; border-radius: 10px; background: var(--accent); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; font-weight: 700; flex-shrink: 0; }
-  .hermes-row h4 { font-family: var(--font-body); font-size: 22px; color: #fff; margin-bottom: 8px; }
-  .hermes-row p { font-size: var(--small); color: rgba(255,255,255,0.7); line-height: 1.6; }
-  .hermes-row .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
-  .hermes-row .tags span { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 5px 10px; font-size: 12px; color: rgba(255,255,255,0.8); }
-
-  .grid-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 32px 32px;
-    pointer-events: none;
-    opacity: 0.5;
-  }
-  .glow {
-    position: absolute;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(196,92,38,0.12), transparent 60%);
-    filter: blur(60px);
-    bottom: -200px; left: -120px;
-    pointer-events: none;
-  }
+  .header .subtitle { color: rgba(255,255,255,0.72); font-size: 26px; max-width: 1100px; line-height: 1.5; }
+  
+  .chart-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: center; }
+  
+  .chart-wrap { position: relative; height: 460px; }
+  .chart-wrap svg { width: 100%; height: 100%; overflow: visible; }
+  .grid-line { stroke: rgba(255,255,255,0.08); stroke-width: 1; }
+  .axis-text { fill: rgba(255,255,255,0.45); font-family: var(--font-en); font-size: 14px; }
+  .curve { fill: none; stroke: url(#curveGradient); stroke-width: 5; stroke-linecap: round; filter: drop-shadow(0 0 14px rgba(232,123,58,0.35)); }
+  .area { fill: url(#areaGradient); opacity: 0.22; }
+  .node { fill: var(--tech-bg); stroke: var(--accent-light); stroke-width: 3; }
+  .node-label { fill: #fff; font-family: var(--font-body); font-size: 16px; font-weight: 600; }
+  .node-sub { fill: rgba(255,255,255,0.65); font-family: var(--font-body); font-size: 13px; }
+  
+  .watch-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 18px; padding: 32px; }
+  .watch-card h4 { font-family: var(--font-body); font-size: 22px; color: var(--accent-light); margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
+  .watch-card h4::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-light); box-shadow: 0 0 10px var(--accent-light); }
+  .watch-list { display: flex; flex-direction: column; gap: 14px; }
+  .watch-item { display: flex; gap: 14px; align-items: flex-start; }
+  .watch-item .num { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent-light); line-height: 1; min-width: 26px; }
+  .watch-item .txt { font-size: var(--small); color: rgba(255,255,255,0.85); line-height: 1.5; padding-top: 2px; }
+  .watch-item .tag { display: inline-block; font-size: 12px; color: var(--accent-light); background: rgba(196,92,38,0.15); border: 1px solid rgba(196,92,38,0.3); border-radius: 5px; padding: 2px 8px; margin-left: 8px; }
+  
+  .grid-bg { position: absolute; inset: 0; background: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 32px 32px; pointer-events: none; opacity: 0.5; }
+  .glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(196,92,38,0.12), transparent 60%); filter: blur(60px); bottom: -220px; left: -120px; pointer-events: none; }
 </style>
 </head>
 <body class="tech-dark">
@@ -86,63 +47,96 @@
 
   <div class="page-masthead">
     <div class="brand">AI 工具深度应用</div>
-    <div>9 / 37 · 工具背景</div>
+    <div>8 / 36 · 工具背景</div>
   </div>
 
   <div class="main">
     <div class="header">
       <div class="kicker" style="color: var(--accent-light);">1-Year Trajectory</div>
-      <h2>最近 1 年 AI 工具 <span class="accent">演进脉络</span></h2>
-      <p class="subtitle">模型能力、工程封装、入口形态三条线并行，整个行业都在回答同一个问题：怎么让 AI 从「用完即走」变成「长期协作」。</p>
+      <h2>最近 1 年 AI 工具 <span class="accent">能力持续升级</span></h2>
+      <p class="subtitle">模型能力、工程封装、入口形态三条线并行，AI 正在从「用完即走的工具」变成「可长期协作的数字角色」。</p>
     </div>
 
-    <div class="timeline">
-      <div class="phase">
-        <div class="date">2025 下半年</div>
-        <div class="version">模型能力跃迁</div>
-        <div class="theme">多模态、长上下文、推理能力增强，为 Agent 时代奠定模型基础</div>
-        <div class="changes">
-          <span><strong>代表：</strong>GPT-4o、Claude 3.5、Gemini 1.5 等</span>
-          <span>长上下文让 Agent 能读完整项目/文档</span>
-          <span>多模态让 AI 能看截图、听语音、读图表</span>
-        </div>
+    <div class="chart-row">
+      <div class="chart-wrap">
+        <svg viewBox="0 0 760 460" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#E87B3A" />
+              <stop offset="100%" stop-color="#F5A962" />
+            </linearGradient>
+            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#E87B3A" stop-opacity="0.45" />
+              <stop offset="100%" stop-color="#E87B3A" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          
+          <!-- grid lines -->
+          <line x1="80" y1="380" x2="700" y2="380" class="grid-line" />
+          <line x1="80" y1="300" x2="700" y2="300" class="grid-line" />
+          <line x1="80" y1="220" x2="700" y2="220" class="grid-line" />
+          <line x1="80" y1="140" x2="700" y2="140" class="grid-line" />
+          
+          <!-- area under curve -->
+          <path class="area" d="M 80,380 C 180,370 220,340 280,300 C 340,260 420,240 480,200 C 540,160 600,140 700,80 L 700,380 Z" />
+          
+          <!-- curve -->
+          <path class="curve" d="M 80,380 C 180,370 220,340 280,300 C 340,260 420,240 480,200 C 540,160 600,140 700,80" />
+          
+          <!-- nodes -->
+          <circle cx="80" cy="380" r="8" class="node" />
+          <circle cx="280" cy="300" r="8" class="node" />
+          <circle cx="480" cy="200" r="8" class="node" />
+          <circle cx="700" cy="80" r="10" class="node" />
+          
+          <!-- labels -->
+          <text x="80" y="415" text-anchor="middle" class="axis-text">2025 下半年</text>
+          <text x="280" y="415" text-anchor="middle" class="axis-text">2025 年底</text>
+          <text x="480" y="415" text-anchor="middle" class="axis-text">2026 上半年</text>
+          <text x="700" y="415" text-anchor="middle" class="axis-text">现在</text>
+          
+          <text x="280" y="275" text-anchor="middle" class="node-label">模型能力跃迁</text>
+          <text x="280" y="292" text-anchor="middle" class="node-sub">多模态 / 长上下文 / 推理增强</text>
+          
+          <text x="480" y="175" text-anchor="middle" class="node-label">Agent 觉醒</text>
+          <text x="480" y="192" text-anchor="middle" class="node-sub">MCP / Computer Use / 工具调用标准化</text>
+          
+          <text x="700" y="55" text-anchor="middle" class="node-label">工程化与普惠化</text>
+          <text x="700" y="72" text-anchor="middle" class="node-sub">Skills / 多 Agent 协作 / 长期在线运行</text>
+        </svg>
       </div>
 
-      <div class="phase">
-        <div class="date">2025 年底</div>
-        <div class="version">Agent 觉醒</div>
-        <div class="theme">行业意识到「模型只是基础，Agent 才是下一步」</div>
-        <div class="changes">
-          <span><strong>代表：</strong>Claude Code、OpenAI Codex、Anthropic Computer Use</span>
-          <span>MCP 规范发布，工具调用开始标准化</span>
-          <span>AI 第一次能真正「操作电脑」和「调用工具」</span>
-        </div>
-      </div>
-
-      <div class="phase">
-        <div class="date">2026 上半年</div>
-        <div class="version">工程化与普惠化</div>
-        <div class="theme">Agent 开始可封装、可编排、可长期在线运行</div>
-        <div class="changes">
-          <span><strong>Skills / MCP</strong> 成为可复用标准</span>
-          <span><strong>MOA</strong>、Kanban、Subagents 让多 Agent 协作落地</span>
-          <span>桌面客户端、消息渠道、定时任务让 AI 融入日常工作流</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="hermes-row">
-      <div class="icon">H</div>
-      <div>
-        <h4>Hermes 是这个演进的一个缩影</h4>
-        <p>它的更新路径不是堆模型能力，而是把上述趋势产品化：用 <strong>/goal</strong> 把对话转成目标契约，用 <strong>/learn</strong> 和 <strong>/journey</strong> 形成自我改进循环，用 <strong>MOA（Mixture-of-Agents）</strong> 让多个模型互相校验，再用 Skills、MCP、记忆和消息渠道把这些能力封装成可长期运行的系统。</p>
-        <div class="tags">
-          <span>/goal 目标契约</span>
-          <span>/learn 学习循环</span>
-          <span>MOA 多模型混合</span>
-          <span>Skills 封装</span>
-          <span>MCP 工具标准</span>
-          <span>跨会话记忆</span>
+      <div class="watch-card">
+        <h4>值得高度关注的能力项</h4>
+        <div class="watch-list">
+          <div class="watch-item">
+            <span class="num">01</span>
+            <div class="txt">
+              多模态理解<span class="tag">看图 / 听语音 / 读图表</span>
+              <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">产品文档、截图、用户反馈都能直接喂给 AI</div>
+            </div>
+          </div>
+          <div class="watch-item">
+            <span class="num">02</span>
+            <div class="txt">
+              长上下文记忆<span class="tag">项目背景不丢失</span>
+              <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">让 AI 能记住跨会话的偏好、结论和上下文</div>
+            </div>
+          </div>
+          <div class="watch-item">
+            <span class="num">03</span>
+            <div class="txt">
+              工具调用与 MCP 标准<span class="tag">可连接外部系统</span>
+              <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">AI 不再只聊天，能查数据、写代码、发消息、调接口</div>
+            </div>
+          </div>
+          <div class="watch-item">
+            <span class="num">04</span>
+            <div class="txt">
+              多 Agent 协作与封装<span class="tag">Skills / 编排 / 自动运行</span>
+              <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">把重复流程封装成可复用、可定时执行的系统</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -150,7 +144,7 @@
 
   <div class="page-footer">
     <div class="section-tag">工具背景 · 最近 1 年 AI 工具演进</div>
-    <div>AI 工具在产品工作中的深度应用</div>
+    <div>AI 工具在硬件产品工作中的深度应用</div>
   </div>
 </div>
 </body>
