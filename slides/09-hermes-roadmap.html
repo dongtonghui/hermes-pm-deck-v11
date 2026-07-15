@@ -8,175 +8,266 @@
 <style>
   body { background: var(--tech-bg); color: #fff; overflow: hidden; }
   .slide-content { display: flex; flex-direction: column; }
-  .main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 72px; margin-bottom: 60px; }
-  
-  .header { margin-bottom: 44px; }
-  .header h2 { color: #fff; font-size: 72px; margin-bottom: 16px; }
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 72px;
+    margin-bottom: 60px;
+  }
+
+  .header { margin-bottom: 56px; }
+  .header h2 { color: #fff; font-size: 78px; margin-bottom: 18px; letter-spacing: -0.01em; }
   .header h2 .accent { color: var(--accent-light); }
-  .header .subtitle { color: rgba(255,255,255,0.72); font-size: 26px; max-width: 1100px; line-height: 1.5; }
-  
-  .chart-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: center; }
-  
-  .chart-wrap { position: relative; height: 460px; }
+  .header .subtitle { color: rgba(255,255,255,0.72); font-size: 28px; max-width: 1100px; line-height: 1.6; }
+
+  .chart-row { display: grid; grid-template-columns: 1.45fr 1fr; gap: 64px; align-items: center; }
+
+  .chart-wrap { position: relative; height: 500px; }
   .chart-wrap svg { width: 100%; height: 100%; overflow: visible; }
+
   .grid-line { stroke: rgba(255,255,255,0.08); stroke-width: 1; }
-  .axis-text { fill: rgba(255,255,255,0.45); font-family: var(--font-en); font-size: 14px; }
-  .curve { fill: none; stroke: url(#curveGradient); stroke-width: 5; stroke-linecap: round; filter: drop-shadow(0 0 18px rgba(232,123,58,0.55)); stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: drawCurve 2.2s ease-out forwards; }
-  .area { fill: url(#areaGradient); opacity: 0.28; }
-  .node { fill: var(--tech-bg); stroke: var(--accent-light); stroke-width: 3; }
-  .node-halo { fill: none; stroke: var(--accent-light); stroke-width: 2; opacity: 0; }
-  .node-group:nth-child(1) .node-halo { animation: pulseHalo 2.5s ease-out infinite; animation-delay: 0.5s; }
-  .node-group:nth-child(2) .node-halo { animation: pulseHalo 2.5s ease-out infinite; animation-delay: 0.9s; }
-  .node-group:nth-child(3) .node-halo { animation: pulseHalo 2.5s ease-out infinite; animation-delay: 1.3s; }
-  .node-group:nth-child(4) .node-halo { animation: pulseHalo 2.5s ease-out infinite; animation-delay: 1.7s; }
-  .node-label { fill: #fff; font-family: var(--font-body); font-size: 16px; font-weight: 600; }
-  .node-sub { fill: rgba(255,255,255,0.65); font-family: var(--font-body); font-size: 13px; }
-  
+  .grid-line-vertical { stroke: rgba(255,255,255,0.06); stroke-width: 1; stroke-dasharray: 6 6; }
+  .axis-text { fill: rgba(255,255,255,0.55); font-family: var(--font-en); font-size: 15px; letter-spacing: 0.08em; }
+
+  .area {
+    fill: url(#areaGradient);
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+  .curve {
+    fill: none;
+    stroke: url(#curveGradient);
+    stroke-width: 6;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 22px rgba(232,123,58,0.65));
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: drawCurve 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .curve-glow {
+    fill: none;
+    stroke: rgba(232,123,58,0.25);
+    stroke-width: 18;
+    stroke-linecap: round;
+    filter: blur(10px);
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: drawCurve 2.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
   @keyframes drawCurve { to { stroke-dashoffset: 0; } }
-  @keyframes pulseHalo { 0% { opacity: 0.6; transform: scale(1); stroke-width: 2; } 100% { opacity: 0; transform: scale(2.8); stroke-width: 0; } }
-  
-  .watch-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 18px; padding: 32px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06); transition: transform 220ms, border-color 220ms, box-shadow 220ms; }
-  .watch-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.22); box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 28px rgba(196,92,38,0.15), inset 0 1px 0 rgba(255,255,255,0.08); }
-  .watch-card h4 { font-family: var(--font-body); font-size: 22px; color: var(--accent-light); margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
-  .watch-card h4::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-light); box-shadow: 0 0 12px var(--accent-light); animation: pulseDot 1.8s ease-in-out infinite; }
-  @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
-  .watch-list { display: flex; flex-direction: column; gap: 14px; }
-  .watch-item { display: flex; gap: 14px; align-items: flex-start; }
-  .watch-item .num { font-family: var(--font-display); font-size: 22px; font-weight: 700; background: linear-gradient(135deg, var(--accent-light) 0%, #F5A962 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; min-width: 26px; text-shadow: 0 0 20px rgba(232,123,58,0.35); }
-  .watch-item .txt { font-size: var(--small); color: rgba(255,255,255,0.85); line-height: 1.5; padding-top: 2px; }
-  .watch-item .tag { display: inline-block; font-size: 12px; color: var(--accent-light); background: rgba(196,92,38,0.15); border: 1px solid rgba(196,92,38,0.3); border-radius: 5px; padding: 2px 8px; margin-left: 8px; }
-  
-  .grid-bg { position: absolute; inset: 0; background: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 32px 32px; pointer-events: none; opacity: 0.5; }
-  .glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(196,92,38,0.12), transparent 60%); filter: blur(60px); bottom: -220px; left: -120px; pointer-events: none; }
-  .glow-focus { position: absolute; width: 340px; height: 340px; border-radius: 50%; background: radial-gradient(circle, rgba(232,123,58,0.28), transparent 60%); filter: blur(40px); top: 50px; right: 460px; pointer-events: none; animation: breatheGlow 3.5s ease-in-out infinite alternate; }
-  @keyframes breatheGlow { from { opacity: 0.6; transform: scale(1); } to { opacity: 1; transform: scale(1.2); } }
-  
+
+  .node { fill: var(--accent-light); stroke: #fff; stroke-width: 2; filter: drop-shadow(0 0 12px rgba(232,123,58,0.9)); }
+  .node-ring {
+    fill: none;
+    stroke: var(--accent-light);
+    stroke-width: 2;
+    opacity: 0;
+    transform-origin: center;
+    animation: pulseRing 2.4s ease-out infinite;
+  }
+  .node-group:nth-child(1) .node-ring { animation-delay: 0.8s; }
+  .node-group:nth-child(2) .node-ring { animation-delay: 1.2s; }
+  .node-group:nth-child(3) .node-ring { animation-delay: 1.6s; }
+  .node-group:nth-child(4) .node-ring { animation-delay: 2s; }
+
+  @keyframes pulseRing {
+    0% { opacity: 0.7; transform: scale(1); stroke-width: 2; }
+    100% { opacity: 0; transform: scale(2.6); stroke-width: 0; }
+  }
+
+  .node-label-card {
+    opacity: 0;
+    animation: fadeSlideUp 0.7s var(--ease-expo) forwards;
+  }
+  .node-group:nth-child(1) ~ .node-label-card,
+  .node-label-card:nth-of-type(1) { animation-delay: 1s; }
+  .node-label-card:nth-of-type(2) { animation-delay: 1.4s; }
+  .node-label-card:nth-of-type(3) { animation-delay: 1.8s; }
+
+  .node-label-bg {
+    fill: rgba(30,30,28,0.85);
+    stroke: rgba(232,123,58,0.35);
+    stroke-width: 1;
+    rx: 10;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.35));
+  }
+  .node-label-title { fill: #fff; font-family: var(--font-body); font-size: 17px; font-weight: 600; }
+  .node-label-sub { fill: rgba(255,255,255,0.65); font-family: var(--font-body); font-size: 13px; }
+
+  .watch-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 20px;
+    padding: 36px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow:
+      0 12px 40px rgba(0,0,0,0.32),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s var(--ease-expo) 1.6s forwards;
+    transition: transform 220ms, border-color 220ms, box-shadow 220ms;
+  }
+  .watch-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent-light), #F5A962, var(--accent-light));
+    box-shadow: 0 0 18px rgba(232,123,58,0.5);
+  }
+  .watch-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(232,123,58,0.35);
+    box-shadow:
+      0 20px 56px rgba(0,0,0,0.4),
+      0 0 32px rgba(196,92,38,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .watch-card h4 {
+    font-family: var(--font-body);
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .watch-card h4::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-light);
+    box-shadow: 0 0 14px var(--accent-light);
+    animation: pulseDot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.5); } }
+
+  .watch-list { display: flex; flex-direction: column; gap: 22px; }
+  .watch-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 18px;
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+    transition: background 200ms, border-color 200ms;
+  }
+  .watch-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(232,123,58,0.25); }
+  .watch-item .num {
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-light) 0%, #F5A962 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    min-width: 32px;
+    text-shadow: 0 0 20px rgba(232,123,58,0.35);
+  }
+  .watch-item .txt { flex: 1; }
+  .watch-item .title-row {
+    font-size: var(--small);
+    color: rgba(255,255,255,0.92);
+    line-height: 1.45;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .watch-item .tag {
+    display: inline-block;
+    font-size: 12px;
+    color: var(--accent-light);
+    background: rgba(196,92,38,0.15);
+    border: 1px solid rgba(196,92,38,0.3);
+    border-radius: 5px;
+    padding: 2px 8px;
+    margin-left: 8px;
+    vertical-align: 1px;
+  }
+  .watch-item .desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.58);
+    line-height: 1.55;
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 40px 40px;
+    pointer-events: none;
+    opacity: 0.45;
+    mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, black 0%, transparent 70%);
+  }
+  .glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,92,38,0.14), transparent 60%);
+    filter: blur(80px);
+    bottom: -260px; left: -160px;
+    pointer-events: none;
+  }
+  .glow-focus {
+    position: absolute;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,123,58,0.22), transparent 60%);
+    filter: blur(50px);
+    top: 40px; right: 420px;
+    pointer-events: none;
+    animation: breatheGlow 4s ease-in-out infinite alternate;
+  }
+  @keyframes breatheGlow { from { opacity: 0.6; transform: scale(1); } to { opacity: 1; transform: scale(1.15); } }
+
   .particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-  .particle { position: absolute; width: 4px; height: 4px; background: rgba(232,123,58,0.6); border-radius: 50%; box-shadow: 0 0 8px rgba(232,123,58,0.8); animation: rise linear infinite; }
-  @keyframes rise { from { transform: translateY(0) scale(1); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } to { transform: translateY(-120px) scale(0.4); opacity: 0; } }
+  .particle {
+    position: absolute;
+    width: 3px; height: 3px;
+    background: rgba(232,123,58,0.55);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(232,123,58,0.7);
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    from { transform: translateY(0) scale(1); opacity: 0; }
+    10% { opacity: 0.7; }
+    90% { opacity: 0.7; }
+    to { transform: translateY(-140px) scale(0.3); opacity: 0; }
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .anim-title { opacity: 0; animation: fadeSlideUp 0.8s var(--ease-expo) forwards; }
+  .anim-subtitle { opacity: 0; animation: fadeSlideUp 0.8s var(--ease-expo) 0.15s forwards; }
 </style>
 
 <style class="dark-override">
-  /* 深色模式通用覆盖 */
   body.tech-dark h1, body.tech-dark h2, body.tech-dark h3, body.tech-dark h4 { color: #fff; }
   body.tech-dark .subtitle { color: rgba(255,255,255,0.72); }
-  body.tech-dark .body-large,
-  body.tech-dark .body-small,
-  body.tech-dark p { color: rgba(255,255,255,0.8); }
-  
-  /* 卡片统一变深色玻璃面板 */
-  .card, .quote-card, .stat-card, .col-card, .reframe-card,
-  .takeaway-card, .assumption-item, .download-card, .check-card,
-  .tool-card, .principle-card, .agent-card, .role-card,
-  .analysis-card, .output-card, .skill-card, .resource-card,
-  .action-card, .practice-card, .value-card, .feature-card,
-  .insight-card, .workshop-card, .legend-card {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
-    color: #fff !important;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
-  }
-  .card h3, .card h4, .quote-card h4, .stat-card h4, .col-card h4,
-  .reframe-card h4, .takeaway-card h4, .assumption-item h4,
-  .download-card h4, .tool-card h4, .principle-card h4, .agent-card h4,
-  .role-card h4, .analysis-card h4, .output-card h4, .skill-card h4,
-  .resource-card h4, .action-card h4, .practice-card h4, .value-card h4,
-  .feature-card h4, .insight-card h4, .workshop-card h4, .legend-card h4 {
-    color: #fff !important;
-  }
-  .card p, .quote-card p, .stat-card p, .col-card p, .reframe-card p,
-  .takeaway-card p, .assumption-item p, .download-card p, .tool-card p,
-  .principle-card p, .agent-card p, .role-card p, .analysis-card p,
-  .output-card p, .skill-card p, .resource-card p, .action-card p,
-  .practice-card p, .value-card p, .feature-card p, .insight-card p,
-  .workshop-card p, .legend-card p {
-    color: rgba(255,255,255,0.65) !important;
-  }
-  
-  /* 表格深色 */
-  table { color: rgba(255,255,255,0.85); }
-  th { color: rgba(255,255,255,0.55); border-bottom-color: rgba(255,255,255,0.15); }
-  td { border-bottom-color: rgba(255,255,255,0.08); }
-  
-  /* 列表 */
-  .check-list li { color: rgba(255,255,255,0.7); }
-  .check-list li::before { color: #fff; }
-  
-  /* 输入框、按钮 */
-  input, textarea, select { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #fff; }
-  button, .btn { background: var(--accent); color: #fff; }
-  
-  /* 引用块 */
-  .callout { border-left-color: var(--accent-light); color: #fff; }
-  .bottom-quote { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
-  .bottom-quote p { color: rgba(255,255,255,0.9); }
-  .bottom-quote .mark { color: var(--accent-light); }
-  .bottom-quote .src { color: rgba(255,255,255,0.5); }
-  
-  /* 特殊保留的深色卡片 */
-  .col-card.current, .reframe-card.after, .quote-card.dark, .card.dark {
-    background: rgba(255,255,255,0.08) !important;
-    border-color: rgba(255,255,255,0.18) !important;
-  }
-  
-  /* 分隔线 */
-  .divider, .separator { background: rgba(255,255,255,0.12); }
-  
-  /* 标签 */
-  .tag, .pill, .badge {
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.12);
-    color: rgba(255,255,255,0.8);
-  }
-  
-  /* 链接 */
-  a { color: var(--accent-light); }
-  a:hover { color: #fff; }
-
-  /* 更多常见容器的深色覆盖 */
-  .example, .right, .left-panel, .right-panel, .formula,
-  .goal-formula, .reframe-formula, .scenario, .case-box,
-  .template-box, .prompt-box, .output-box, .input-box,
-  .workflow-card, .step-card, .stage-card, .result-card,
-  .metric-card, .demo-card, .summary-card, .takeaway,
-  .note, .box, .panel, .frame, .card-light, .light-card {
-    background: rgba(255,255,255,0.05) !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
-    color: #fff !important;
-  }
-  .example h4, .right h4, .formula h4, .box h4, .panel h4 {
-    color: #fff !important;
-  }
-  .example p, .right p, .formula p, .box p, .panel p {
-    color: rgba(255,255,255,0.65) !important;
-  }
-  .example strong, .right strong, .formula strong, .box strong, .panel strong {
-    color: var(--accent-light) !important;
-  }
-  
-  /* 反色文本 */
-  .ink, .ink-primary, .dark, .text-ink { color: #fff !important; }
-  .ink-secondary, .text-secondary { color: rgba(255,255,255,0.65) !important; }
-  .text-muted { color: rgba(255,255,255,0.45) !important; }
-  
-  /* 暖色变量直接替换 */
-  :root { --paper: #151514; --paper-warm: #151514; --line: rgba(255,255,255,0.12); }
-
-
-  /* 更多深色覆盖 */
-  .ink, .ink-primary, .text-ink { color: #fff !important; }
-  .ink-secondary, .text-secondary, .secondary, .text-muted { color: rgba(255,255,255,0.65) !important; }
-  .kicker-light { color: rgba(255,255,255,0.6) !important; }
-  .card-light, .light-card { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.12) !important; color: #fff !important; }
-
-
 </style>
-
 </head>
 <body class="tech-dark" style="background: var(--tech-bg); color: #fff;">
 <div class="slide-content">
   <div class="grid-bg"></div>
   <div class="glow"></div>
+  <div class="glow-focus"></div>
+  <div class="particles" id="particles"></div>
 
   <div class="page-masthead">
     <div class="brand">AI 工具深度应用</div>
@@ -186,13 +277,13 @@
   <div class="main">
     <div class="header">
       <div class="kicker" style="color: var(--accent-light);">1-Year Trajectory</div>
-      <h2>最近 1 年 AI 工具 <span class="accent">能力持续升级</span></h2>
-      <p class="subtitle">模型能力、工程封装、入口形态三条线并行，AI 正在从「用完即走的工具」变成「可长期协作的数字角色」。</p>
+      <h2 class="anim-title">最近 1 年 AI 工具 <span class="accent">能力持续升级</span></h2>
+      <p class="subtitle anim-subtitle">模型能力、工程封装、入口形态三条线并行，AI 正在从「用完即走的工具」变成「可长期协作的数字角色」。</p>
     </div>
 
     <div class="chart-row">
       <div class="chart-wrap">
-        <svg viewBox="0 0 760 460" preserveAspectRatio="none">
+        <svg viewBox="0 0 840 500" preserveAspectRatio="xMidYMid meet">
           <defs>
             <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#E87B3A" />
@@ -200,56 +291,75 @@
               <stop offset="100%" stop-color="#F5C98C" />
             </linearGradient>
             <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#E87B3A" stop-opacity="0.55" />
-              <stop offset="60%" stop-color="#E87B3A" stop-opacity="0.15" />
+              <stop offset="0%" stop-color="#E87B3A" stop-opacity="0.6" />
+              <stop offset="50%" stop-color="#E87B3A" stop-opacity="0.18" />
               <stop offset="100%" stop-color="#E87B3A" stop-opacity="0" />
             </linearGradient>
           </defs>
-          
+
           <!-- grid lines -->
-          <line x1="80" y1="380" x2="700" y2="380" class="grid-line" />
-          <line x1="80" y1="300" x2="700" y2="300" class="grid-line" />
-          <line x1="80" y1="220" x2="700" y2="220" class="grid-line" />
-          <line x1="80" y1="140" x2="700" y2="140" class="grid-line" />
-          
+          <line x1="90" y1="410" x2="780" y2="410" class="grid-line" />
+          <line x1="90" y1="330" x2="780" y2="330" class="grid-line" />
+          <line x1="90" y1="250" x2="780" y2="250" class="grid-line" />
+          <line x1="90" y1="170" x2="780" y2="170" class="grid-line" />
+
+          <line x1="90" y1="410" x2="90" y2="90" class="grid-line-vertical" />
+          <line x1="270" y1="410" x2="270" y2="90" class="grid-line-vertical" />
+          <line x1="450" y1="410" x2="450" y2="90" class="grid-line-vertical" />
+          <line x1="630" y1="410" x2="630" y2="90" class="grid-line-vertical" />
+          <line x1="780" y1="410" x2="780" y2="90" class="grid-line-vertical" />
+
           <!-- area under curve -->
-          <path class="area" d="M 80,380 C 180,370 220,340 280,300 C 340,260 420,240 480,200 C 540,160 600,140 700,80 L 700,380 Z" />
-          
-          <!-- curve -->
-          <path class="curve" d="M 80,380 C 180,370 220,340 280,300 C 340,260 420,240 480,200 C 540,160 600,140 700,80" />
-          
+          <path class="area" d="M 90,410 C 180,405 240,380 300,340 C 360,300 420,270 510,220 C 600,170 660,140 780,70 L 780,410 Z" />
+
+          <!-- glow curve -->
+          <path class="curve-glow" d="M 90,410 C 180,405 240,380 300,340 C 360,300 420,270 510,220 C 600,170 660,140 780,70" />
+
+          <!-- main curve -->
+          <path class="curve" d="M 90,410 C 180,405 240,380 300,340 C 360,300 420,270 510,220 C 600,170 660,140 780,70" />
+
           <!-- nodes -->
           <g class="node-group">
-            <circle cx="80" cy="380" r="28" class="node-halo" />
-            <circle cx="80" cy="380" r="8" class="node" />
+            <circle cx="90" cy="410" r="22" class="node-ring" />
+            <circle cx="90" cy="410" r="7" class="node" />
           </g>
           <g class="node-group">
-            <circle cx="280" cy="300" r="28" class="node-halo" />
-            <circle cx="280" cy="300" r="8" class="node" />
+            <circle cx="300" cy="340" r="26" class="node-ring" />
+            <circle cx="300" cy="340" r="8" class="node" />
           </g>
           <g class="node-group">
-            <circle cx="480" cy="200" r="28" class="node-halo" />
-            <circle cx="480" cy="200" r="8" class="node" />
+            <circle cx="510" cy="220" r="30" class="node-ring" />
+            <circle cx="510" cy="220" r="9" class="node" />
           </g>
           <g class="node-group">
-            <circle cx="700" cy="80" r="36" class="node-halo" />
-            <circle cx="700" cy="80" r="12" class="node" />
+            <circle cx="780" cy="70" r="38" class="node-ring" />
+            <circle cx="780" cy="70" r="12" class="node" />
           </g>
-          
-          <!-- labels -->
-          <text x="80" y="415" text-anchor="middle" class="axis-text">2025 下半年</text>
-          <text x="280" y="415" text-anchor="middle" class="axis-text">2025 年底</text>
-          <text x="480" y="415" text-anchor="middle" class="axis-text">2026 上半年</text>
-          <text x="700" y="415" text-anchor="middle" class="axis-text">现在</text>
-          
-          <text x="280" y="275" text-anchor="middle" class="node-label">模型能力跃迁</text>
-          <text x="280" y="292" text-anchor="middle" class="node-sub">多模态 / 长上下文 / 推理增强</text>
-          
-          <text x="480" y="175" text-anchor="middle" class="node-label">Agent 觉醒</text>
-          <text x="480" y="192" text-anchor="middle" class="node-sub">MCP / Computer Use / 工具调用标准化</text>
-          
-          <text x="700" y="55" text-anchor="middle" class="node-label">工程化与普惠化</text>
-          <text x="700" y="72" text-anchor="middle" class="node-sub">Skills / 多 Agent 协作 / 长期在线运行</text>
+
+          <!-- axis labels -->
+          <text x="90" y="445" text-anchor="middle" class="axis-text">2025 下半年</text>
+          <text x="300" y="445" text-anchor="middle" class="axis-text">2025 年底</text>
+          <text x="510" y="445" text-anchor="middle" class="axis-text">2026 上半年</text>
+          <text x="780" y="445" text-anchor="middle" class="axis-text">现在</text>
+
+          <!-- floating node labels -->
+          <g class="node-label-card">
+            <rect x="210" y="250" width="180" height="56" rx="10" class="node-label-bg" />
+            <text x="300" y="278" text-anchor="middle" class="node-label-title">模型能力跃迁</text>
+            <text x="300" y="298" text-anchor="middle" class="node-label-sub">多模态 / 长上下文 / 推理增强</text>
+          </g>
+
+          <g class="node-label-card">
+            <rect x="420" y="125" width="180" height="56" rx="10" class="node-label-bg" />
+            <text x="510" y="153" text-anchor="middle" class="node-label-title">Agent 觉醒</text>
+            <text x="510" y="173" text-anchor="middle" class="node-label-sub">MCP / Computer Use / 工具调用</text>
+          </g>
+
+          <g class="node-label-card">
+            <rect x="650" y="20" width="180" height="56" rx="10" class="node-label-bg" />
+            <text x="740" y="48" text-anchor="middle" class="node-label-title">工程化与普惠化</text>
+            <text x="740" y="68" text-anchor="middle" class="node-label-sub">Skills / 多 Agent 协作 / 长期在线</text>
+          </g>
         </svg>
       </div>
 
@@ -259,29 +369,29 @@
           <div class="watch-item">
             <span class="num">01</span>
             <div class="txt">
-              多模态理解<span class="tag">看图 / 听语音 / 读图表</span>
-              <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">产品文档、截图、用户反馈都能直接喂给 AI</div>
+              <div class="title-row">多模态理解<span class="tag">看图 / 听语音 / 读图表</span></div>
+              <div class="desc">产品文档、截图、用户反馈都能直接喂给 AI</div>
             </div>
           </div>
           <div class="watch-item">
             <span class="num">02</span>
             <div class="txt">
-              长上下文记忆<span class="tag">项目背景不丢失</span>
-              <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">让 AI 能记住跨会话的偏好、结论和上下文</div>
+              <div class="title-row">长上下文记忆<span class="tag">项目背景不丢失</span></div>
+              <div class="desc">让 AI 能记住跨会话的偏好、结论和上下文</div>
             </div>
           </div>
           <div class="watch-item">
             <span class="num">03</span>
             <div class="txt">
-              工具调用与 MCP 标准<span class="tag">可连接外部系统</span>
-              <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">AI 不再只聊天，能查数据、写代码、发消息、调接口</div>
+              <div class="title-row">工具调用与 MCP 标准<span class="tag">可连接外部系统</span></div>
+              <div class="desc">AI 不再只聊天，能查数据、写代码、发消息、调接口</div>
             </div>
           </div>
           <div class="watch-item">
             <span class="num">04</span>
             <div class="txt">
-              多 Agent 协作与封装<span class="tag">Skills / 编排 / 自动运行</span>
-              <div style="font-size:13px;color:rgba(255,255,255,0.55);margin-top:4px;">把重复流程封装成可复用、可定时执行的系统</div>
+              <div class="title-row">多 Agent 协作与封装<span class="tag">Skills / 编排 / 自动运行</span></div>
+              <div class="desc">把重复流程封装成可复用、可定时执行的系统</div>
             </div>
           </div>
         </div>
@@ -297,14 +407,14 @@
 
 <script>
   const particles = document.getElementById('particles');
-  for (let i = 0; i < 28; i++) {
+  for (let i = 0; i < 18; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     p.style.left = Math.random() * 100 + '%';
-    p.style.bottom = Math.random() * 60 + '%';
-    p.style.animationDuration = (4 + Math.random() * 6) + 's';
+    p.style.bottom = Math.random() * 50 + '%';
+    p.style.animationDuration = (5 + Math.random() * 7) + 's';
     p.style.animationDelay = (Math.random() * 5) + 's';
-    p.style.opacity = 0.3 + Math.random() * 0.5;
+    p.style.opacity = 0.2 + Math.random() * 0.4;
     particles.appendChild(p);
   }
 </script>
