@@ -16,7 +16,12 @@
   .header h2 .accent { color: var(--accent); }
   .header .subtitle { font-size: var(--body); color: var(--ink-secondary); max-width: 900px; line-height: 1.6; }
 
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .card { padding: 26px; }
+  .card h4 { font-size: 24px; }
+  .card .tagline { font-size: 16px; }
+  .card .workflow li { font-size: 13px; }
+  .card .btn { font-size: 13px; padding: 10px 14px; }
   .card { background: #fff; border: 1px solid var(--rule); border-radius: 20px; padding: 32px; box-shadow: 0 12px 40px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
   .card .card-head { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
   .card .icon { width: 56px; height: 56px; border-radius: 14px; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; flex-shrink: 0; }
@@ -41,14 +46,14 @@
 <div class="slide-content">
   <div class="page-masthead">
     <div class="brand">AI 工具深度应用</div>
-    <div>37 / 37 · 附录</div>
+    <div>36 / 36 · 附录</div>
   </div>
 
   <div class="main">
     <div class="header">
       <div class="kicker">Workshop Appendix</div>
       <h2>附录 A · 本次工作坊会用到的 <span class="accent">Hermes 技能</span></h2>
-      <p class="subtitle">下面两个技能都已在主讲人的 Hermes 中安装。它们代表了「把 AI 从聊天框变成工作流」的两条路径：一个负责快速产出高保真视觉，一个负责把社区声音变成可分析的数据。</p>
+      <p class="subtitle">下面三个技能代表了「把 AI 从聊天框变成工作流」的不同路径：高保真视觉、社区情报、以及 skill 自身的持续进化。</p>
     </div>
 
     <div class="cards">
@@ -88,6 +93,25 @@
         <div class="tagline">竞品社区调研、用户需求验证、社交媒体聆听、Reddit 情报。</div>
         <a class="btn secondary" href="https://github.com/dongtonghui/reddit-community-research" target="_blank">下载与安装</a>
         <div class="install-note">安装：将仓库 clone 到 ~/.hermes/skills/research/reddit-community-research/</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="icon">D</div>
+          <h4>darwin-skill</h4>
+        </div>
+        <div class="tagline">达尔文.skill：像训练模型一样优化你的 Agent Skills，评估 → 改进 → 测试 → 保留或回滚。</div>
+        <div class="section-title">工作流程原理</div>
+        <ul class="workflow">
+          <li><span>1</span> 选择要优化的 skill，用 9 维度评估体系打分</li>
+          <li><span>2</span> 针对最低分维度生成一个具体改进方案</li>
+          <li><span>3</span> 独立子 agent 复评，改进有效则保留，否则回滚</li>
+          <li><span>4</span> 每轮结束暂停，等人确认后再进入下一轮</li>
+        </ul>
+        <div class="section-title">适用情况</div>
+        <div class="tagline">Skill 质量评估、迭代优化、反模式排查、持续进化。</div>
+        <a class="btn secondary" href="https://github.com/alchaincyf/darwin-skill" target="_blank">下载与安装</a>
+        <div class="install-note">安装：将仓库 clone 到 ~/.hermes/skills/autonomous-ai-agents/darwin-skill/</div>
       </div>
     </div>
 
