@@ -155,6 +155,14 @@
     .print-stack iframe { width: 1920px; height: 1080px; page-break-after: always; display: block; }
   }
 </style>
+
+<style>
+  .deck-nav { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); display: flex; gap: 18px; z-index: 1000; pointer-events: none; }
+  .deck-nav .nav-btn { pointer-events: auto; width: 52px; height: 52px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.2); background: rgba(30,30,30,0.72); color: rgba(255,255,255,0.9); font-size: 28px; line-height: 1; cursor: pointer; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0,0,0,0.35); transition: transform .18s, background .18s, border-color .18s; display: flex; align-items: center; justify-content: center; padding-bottom: 2px; }
+  .deck-nav .nav-btn:hover { background: rgba(196,92,38,0.9); border-color: rgba(232,123,58,0.5); transform: scale(1.08); color: #fff; }
+  .deck-nav .nav-btn:active { transform: scale(0.96); }
+  .deck-nav .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; background: rgba(30,30,30,0.5); }
+</style>
 </head>
 <body data-mode="overview">
 
@@ -386,6 +394,33 @@
   window.addEventListener('beforeprint', () => { printStack.innerHTML = ''; deck.forEach(item => { const f = document.createElement('iframe'); f.src = item.file; printStack.appendChild(f); }); printStack.style.display = 'block'; stage.style.display = 'none'; });
   window.addEventListener('afterprint', () => { printStack.innerHTML = ''; printStack.style.display = 'none'; stage.style.display = ''; });
 })();
+</script>
+
+  // deck navigation buttons
+  const deckNav = document.getElementById('deckNav');
+  const navPrev = document.getElementById('navPrev');
+  const navNext = document.getElementById('navNext');
+  function updateNav() {
+    if (!deckNav) return;
+    const inOverview = document.getElementById('overview').style.display !== 'none';
+    deckNav.style.display = inOverview ? 'none' : 'flex';
+    if (!inOverview) {
+      navPrev.disabled = current <= 0;
+      navNext.disabled = current >= deck.length - 1;
+    }
+  }
+  if (navPrev) navPrev.addEventListener('click', () => show(current - 1));
+  if (navNext) navNext.addEventListener('click', () => show(current + 1));
+  // update visibility whenever we switch views
+  const origShow = show; window.show = function(idx) { origShow(idx); updateNav(); };
+  const origShowOverview = showOverview; window.showOverview = function() { origShowOverview(); updateNav(); };
+  const origShowPresent = showPresent; window.showPresent = function() { origShowPresent(); updateNav(); };
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(current - 1);
+    if (e.key === 'ArrowRight' || e.key === ' ') show(current + 1);
+  });
+  // initial update
+  updateNav();
 </script>
 </body>
 </html>

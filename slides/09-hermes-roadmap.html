@@ -6,7 +6,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/tokens.css">
 <style>
-  body { background: var(--tech-bg); color: #fff; }
+  body { background: var(--tech-bg); color: #fff; overflow: hidden; }
   .slide-content { display: flex; flex-direction: column; }
   .main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 72px; margin-bottom: 60px; }
   
@@ -21,23 +21,39 @@
   .chart-wrap svg { width: 100%; height: 100%; overflow: visible; }
   .grid-line { stroke: rgba(255,255,255,0.08); stroke-width: 1; }
   .axis-text { fill: rgba(255,255,255,0.45); font-family: var(--font-en); font-size: 14px; }
-  .curve { fill: none; stroke: url(#curveGradient); stroke-width: 5; stroke-linecap: round; filter: drop-shadow(0 0 14px rgba(232,123,58,0.35)); }
-  .area { fill: url(#areaGradient); opacity: 0.22; }
+  .curve { fill: none; stroke: url(#curveGradient); stroke-width: 5; stroke-linecap: round; filter: drop-shadow(0 0 18px rgba(232,123,58,0.55)); stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: drawCurve 2.2s ease-out forwards; }
+  .area { fill: url(#areaGradient); opacity: 0.28; }
   .node { fill: var(--tech-bg); stroke: var(--accent-light); stroke-width: 3; }
+  .node-halo { fill: none; stroke: var(--accent-light); stroke-width: 2; opacity: 0; }
+  .node-group:nth-child(1) .node-halo { animation: pulseHalo 2.5s ease-out infinite; animation-delay: 0.5s; }
+  .node-group:nth-child(2) .node-halo { animation: pulseHalo 2.5s ease-out infinite; animation-delay: 0.9s; }
+  .node-group:nth-child(3) .node-halo { animation: pulseHalo 2.5s ease-out infinite; animation-delay: 1.3s; }
+  .node-group:nth-child(4) .node-halo { animation: pulseHalo 2.5s ease-out infinite; animation-delay: 1.7s; }
   .node-label { fill: #fff; font-family: var(--font-body); font-size: 16px; font-weight: 600; }
   .node-sub { fill: rgba(255,255,255,0.65); font-family: var(--font-body); font-size: 13px; }
   
-  .watch-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 18px; padding: 32px; }
+  @keyframes drawCurve { to { stroke-dashoffset: 0; } }
+  @keyframes pulseHalo { 0% { opacity: 0.6; transform: scale(1); stroke-width: 2; } 100% { opacity: 0; transform: scale(2.8); stroke-width: 0; } }
+  
+  .watch-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: 18px; padding: 32px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.06); transition: transform 220ms, border-color 220ms, box-shadow 220ms; }
+  .watch-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.22); box-shadow: 0 16px 48px rgba(0,0,0,0.35), 0 0 28px rgba(196,92,38,0.15), inset 0 1px 0 rgba(255,255,255,0.08); }
   .watch-card h4 { font-family: var(--font-body); font-size: 22px; color: var(--accent-light); margin-bottom: 22px; display: flex; align-items: center; gap: 10px; }
-  .watch-card h4::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-light); box-shadow: 0 0 10px var(--accent-light); }
+  .watch-card h4::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-light); box-shadow: 0 0 12px var(--accent-light); animation: pulseDot 1.8s ease-in-out infinite; }
+  @keyframes pulseDot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.4); } }
   .watch-list { display: flex; flex-direction: column; gap: 14px; }
   .watch-item { display: flex; gap: 14px; align-items: flex-start; }
-  .watch-item .num { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--accent-light); line-height: 1; min-width: 26px; }
+  .watch-item .num { font-family: var(--font-display); font-size: 22px; font-weight: 700; background: linear-gradient(135deg, var(--accent-light) 0%, #F5A962 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; min-width: 26px; text-shadow: 0 0 20px rgba(232,123,58,0.35); }
   .watch-item .txt { font-size: var(--small); color: rgba(255,255,255,0.85); line-height: 1.5; padding-top: 2px; }
   .watch-item .tag { display: inline-block; font-size: 12px; color: var(--accent-light); background: rgba(196,92,38,0.15); border: 1px solid rgba(196,92,38,0.3); border-radius: 5px; padding: 2px 8px; margin-left: 8px; }
   
   .grid-bg { position: absolute; inset: 0; background: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 1px) 0 0 / 32px 32px; pointer-events: none; opacity: 0.5; }
   .glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(196,92,38,0.12), transparent 60%); filter: blur(60px); bottom: -220px; left: -120px; pointer-events: none; }
+  .glow-focus { position: absolute; width: 340px; height: 340px; border-radius: 50%; background: radial-gradient(circle, rgba(232,123,58,0.28), transparent 60%); filter: blur(40px); top: 50px; right: 460px; pointer-events: none; animation: breatheGlow 3.5s ease-in-out infinite alternate; }
+  @keyframes breatheGlow { from { opacity: 0.6; transform: scale(1); } to { opacity: 1; transform: scale(1.2); } }
+  
+  .particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  .particle { position: absolute; width: 4px; height: 4px; background: rgba(232,123,58,0.6); border-radius: 50%; box-shadow: 0 0 8px rgba(232,123,58,0.8); animation: rise linear infinite; }
+  @keyframes rise { from { transform: translateY(0) scale(1); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } to { transform: translateY(-120px) scale(0.4); opacity: 0; } }
 </style>
 </head>
 <body class="tech-dark">
@@ -63,10 +79,12 @@
           <defs>
             <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stop-color="#E87B3A" />
-              <stop offset="100%" stop-color="#F5A962" />
+              <stop offset="55%" stop-color="#F5A962" />
+              <stop offset="100%" stop-color="#F5C98C" />
             </linearGradient>
             <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#E87B3A" stop-opacity="0.45" />
+              <stop offset="0%" stop-color="#E87B3A" stop-opacity="0.55" />
+              <stop offset="60%" stop-color="#E87B3A" stop-opacity="0.15" />
               <stop offset="100%" stop-color="#E87B3A" stop-opacity="0" />
             </linearGradient>
           </defs>
@@ -84,10 +102,22 @@
           <path class="curve" d="M 80,380 C 180,370 220,340 280,300 C 340,260 420,240 480,200 C 540,160 600,140 700,80" />
           
           <!-- nodes -->
-          <circle cx="80" cy="380" r="8" class="node" />
-          <circle cx="280" cy="300" r="8" class="node" />
-          <circle cx="480" cy="200" r="8" class="node" />
-          <circle cx="700" cy="80" r="10" class="node" />
+          <g class="node-group">
+            <circle cx="80" cy="380" r="28" class="node-halo" />
+            <circle cx="80" cy="380" r="8" class="node" />
+          </g>
+          <g class="node-group">
+            <circle cx="280" cy="300" r="28" class="node-halo" />
+            <circle cx="280" cy="300" r="8" class="node" />
+          </g>
+          <g class="node-group">
+            <circle cx="480" cy="200" r="28" class="node-halo" />
+            <circle cx="480" cy="200" r="8" class="node" />
+          </g>
+          <g class="node-group">
+            <circle cx="700" cy="80" r="36" class="node-halo" />
+            <circle cx="700" cy="80" r="12" class="node" />
+          </g>
           
           <!-- labels -->
           <text x="80" y="415" text-anchor="middle" class="axis-text">2025 下半年</text>
@@ -147,5 +177,19 @@
     <div>AI 工具在硬件产品工作中的深度应用</div>
   </div>
 </div>
+
+<script>
+  const particles = document.getElementById('particles');
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.bottom = Math.random() * 60 + '%';
+    p.style.animationDuration = (4 + Math.random() * 6) + 's';
+    p.style.animationDelay = (Math.random() * 5) + 's';
+    p.style.opacity = 0.3 + Math.random() * 0.5;
+    particles.appendChild(p);
+  }
+</script>
 </body>
 </html>
