@@ -83,14 +83,9 @@
     text-align: left;
     backdrop-filter: blur(12px);
     box-shadow: 0 12px 40px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05);
-    opacity: 0;
-    transform: translateY(60px) scale(0.92);
-    transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo), box-shadow 0.5s ease;
-    pointer-events: none;
-  }
-  .pain-point.visible {
     opacity: 1;
     transform: translateY(0) scale(1);
+    transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo), box-shadow 0.5s ease;
     pointer-events: auto;
   }
   .pain-point::before {
@@ -100,10 +95,9 @@
     height: 3px;
     background: linear-gradient(90deg, transparent, var(--accent-light), transparent);
     border-radius: 20px 20px 0 0;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.6s ease;
   }
-  .pain-point.visible::before { opacity: 1; }
   .pain-point:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 0 30px rgba(232,123,58,0.12), inset 0 1px 0 rgba(255,255,255,0.08); }
 
   /* 三个卡片的最终位置 */
@@ -146,18 +140,17 @@
   .pain-point h4 { color: #fff; font-family: var(--font-body); font-size: 26px; margin-bottom: 12px; }
   .pain-point p { color: rgba(255,255,255,0.65); font-size: var(--small); line-height: 1.6; }
 
-  /* 光柱 */
+  /* 光束 */
   .beam {
     position: absolute;
     width: 2px;
     background: linear-gradient(180deg, transparent, var(--accent-light), transparent);
-    opacity: 0;
-    transform: scaleY(0);
+    opacity: 0.7;
+    transform: scaleY(1);
     transform-origin: top;
     transition: opacity 0.4s ease, transform 0.7s var(--ease-expo);
     filter: blur(1px);
   }
-  .beam.active { opacity: 0.7; transform: scaleY(1); }
   .beam[data-index="0"] { left: 180px; top: -40px; height: 80px; }
   .beam[data-index="1"] { left: 650px; top: -60px; height: 100px; }
   .beam[data-index="2"] { left: 1120px; top: -40px; height: 80px; }
@@ -403,8 +396,8 @@
     </div>
   </div>
 
-  <div class="hint" id="hint">点击 / 空格 / 回车继续；方块全部显示后按 → 进入下一页</div>
-  <div class="summary" id="summary">这三种用法，本质上都把 AI 当成了一次性工具</div>
+  <div class="hint hidden" id="hint">点击 / 空格 / 回车继续；方块全部显示后按 → 进入下一页</div>
+  <div class="summary visible" id="summary">这三种用法，本质上都把 AI 当成了一次性工具</div>
 
   <div class="page-footer">
     <div class="section-tag">开场 · 旧做法的问题</div>
@@ -433,34 +426,20 @@
   const hint = document.getElementById('hint');
   const summary = document.getElementById('summary');
 
-  // 仅显示下一个方块（点击 / 空格 / 回车）
-  function revealNext() {
-    if (step >= totalSteps) return false;
-    points[step].classList.add('visible');
-    beams[step].classList.add('active');
-    step++;
-    if (step === totalSteps) {
-      hint.classList.add('hidden');
-      summary.classList.add('visible');
-    }
-    return true;
-  }
-
-  // 右方向键：显示方块 → 全部显示完后进入下一页
+  // 卡片已直接呈现，保留右方向键翻页
   function forward() {
-    if (!revealNext()) {
-      if (window.parent !== window) {
-        window.parent.postMessage('deck-next', '*');
-      }
+    if (window.parent !== window) {
+      window.parent.postMessage('deck-next', '*');
     }
   }
 
-  document.addEventListener('click', revealNext);
+  document.addEventListener('click', () => {
+    if (window.parent !== window) {
+      window.parent.postMessage('deck-next', '*');
+    }
+  });
   document.addEventListener('keydown', (e) => {
-    if (e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault();
-      revealNext();
-    } else if (e.key === 'ArrowRight') {
+    if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') {
       e.preventDefault();
       forward();
     }
