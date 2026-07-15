@@ -1,86 +1,81 @@
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>2 · 自我介绍</title>
+<title>02-intro · 自我介绍</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/tokens.css">
 <style>
-  .slide-content { display: flex; flex-direction: column; }
-  .main { flex: 1; display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: center; }
-  .left h2 { font-size: 72px; margin-bottom: 32px; }
-  .left .body-large { max-width: 640px; margin-bottom: 40px; }
-  .intro-point { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 24px; }
-  .intro-point .num { font-family: var(--font-display); font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1; min-width: 48px; }
-  .intro-point h4 { font-family: var(--font-body); font-size: 24px; margin-bottom: 6px; }
-  .intro-point p { font-size: var(--small); color: var(--ink-secondary); line-height: 1.55; }
-  .right { display: flex; flex-direction: column; gap: 24px; }
-  .quote-card { background: var(--dark-block); color: #fff; border-radius: 16px; padding: 40px; }
-  .quote-card p { font-family: var(--font-display); font-size: 32px; line-height: 1.45; margin-bottom: 24px; }
-  .quote-card .source { font-size: var(--small); color: rgba(255,255,255,0.6); }
-  .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .stat-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 28px; text-align: center; }
-  .stat-card .num { font-family: var(--font-display); font-size: 56px; font-weight: 900; color: var(--accent); line-height: 1; margin-bottom: 8px; }
-  .stat-card .label { font-size: var(--small); color: var(--ink-secondary); }
+  .slide-content { display: flex; flex-direction: column; background: var(--paper); }
+  .main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 64px; margin-bottom: 60px; }
+  
+  .header-row { display: flex; align-items: flex-end; gap: 48px; margin-bottom: 56px; }
+  .header-row h2 { font-size: 78px; margin-bottom: 0; flex: 1; }
+  .header-row .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); box-shadow: 0 8px 28px rgba(196,92,38,0.16); }
+  .header-row .name { text-align: right; }
+  .header-row .name .n { font-family: var(--font-display); font-size: 32px; font-weight: 700; }
+  .header-row .name .t { font-size: var(--tiny); color: var(--ink-muted); margin-top: 4px; }
+  
+  .subtitle { font-size: 26px; color: var(--ink-secondary); max-width: 1100px; margin-bottom: 52px; line-height: 1.55; }
+  
+  .columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 44px; }
+  .col-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 34px; box-shadow: 0 6px 24px rgba(28,27,24,0.05); }
+  .col-card .num { font-family: var(--font-display); font-size: 40px; font-weight: 900; color: var(--accent); margin-bottom: 14px; line-height: 1; }
+  .col-card h4 { font-family: var(--font-body); font-size: 24px; margin-bottom: 14px; }
+  .col-card p { font-size: var(--small); color: var(--ink-secondary); line-height: 1.6; }
+  .col-card.current { background: var(--dark-block); color: #fff; border-color: transparent; }
+  .col-card.current h4 { color: #fff; }
+  .col-card.current p { color: rgba(255,255,255,0.75); }
+  
+  .bottom-quote { display: flex; gap: 24px; align-items: center; background: var(--accent-pale); border-radius: 16px; padding: 28px 36px; }
+  .bottom-quote .mark { font-family: var(--font-display); font-size: 64px; color: var(--accent); line-height: 1; }
+  .bottom-quote p { font-family: var(--font-display); font-size: 26px; line-height: 1.5; color: var(--ink); flex: 1; }
+  .bottom-quote .src { font-size: var(--tiny); color: var(--ink-muted); white-space: nowrap; }
 </style>
 </head>
 <body>
 <div class="slide-content">
   <div class="page-masthead">
     <div class="brand">AI 工具深度应用</div>
-    <div>2 / 37 · 开场</div>
+    <div>2 / 36 · 开场</div>
   </div>
 
   <div class="main">
-    <div class="left">
-      <div class="kicker">About Me</div>
+    <div class="header-row">
       <h2>我是谁，以及为什么聊这个<span class="accent">话题</span></h2>
-      <p class="body-large">现任 Maygrove 团队产品总监，负责 Maygrove 初代 APP 的产品工作。从互联网平台到硬件创业，我始终在关注一件事：把复杂的工作流程拆解成可协作、可复用的单元，让信息和执行不再堆在一个人身上。</p>
-
-      <div class="intro-point">
-        <div class="num">01</div>
-        <div>
-          <h4>现任：Maygrove 团队产品总监</h4>
-          <p>负责 Maygrove 初代 APP 的产品工作。Maygrove 是一台面向北美都市人群的智能植物种植机，通过 APP 与硬件联动，帮助用户从零开始养活植物、建立种植习惯。</p>
-        </div>
-      </div>
-      <div class="intro-point">
-        <div class="num">02</div>
-        <div>
-          <h4>互联网 & 电商平台背景</h4>
-          <p>曾在阿里、字节等头部互联网公司做产品；经历过以货架为主的跨境电商平台，也做过兴趣电商平台；B 端、C 端都有实战经验。</p>
-        </div>
-      </div>
-      <div class="intro-point">
-        <div class="num">03</div>
-        <div>
-          <h4>数字员工平台的创业尝试</h4>
-          <p>曾做一个"数字员工平台"：把日常工作链条拆解为不同的数字员工角色，让他们互相分工、配合完成日常工作。这段经历直接影响了今天我对 AI 工作流的理解。</p>
-        </div>
-      </div>
-      <div class="intro-point">
-        <div class="num">04</div>
-        <div>
-          <h4>怎么把 AI 真正用进工作里</h4>
-          <p>今天分享的 4 条 AI 用法，是我从平台产品、数字员工创业到硬件创业，反复踩坑踩出来的。重点不是炫技，而是能在真实产品日常里跑起来。</p>
+      <div style="display:flex;gap:20px;align-items:center;">
+        <img class="avatar" src="avatar-02.jpg" alt="Steven">
+        <div class="name">
+          <div class="n">Steven</div>
+          <div class="t">Maygrove 产品总监</div>
         </div>
       </div>
     </div>
-
-    <div class="right">
-      <div class="quote-card">
-        <p>"AI 协作的本质，不是替代人，而是把'一个人'做不过来的信息处理链条，拆成一组能持续配合、可复用的数字角色。"</p>
-        <div class="source">— 从数字员工平台到 AI 工作流的体会</div>
+    
+    <p class="subtitle">从互联网平台到硬件创业，我始终在关注一件事：把复杂的工作流程拆解成可协作、可复用的单元，让信息和执行不再堆在一个人身上。</p>
+    
+    <div class="columns">
+      <div class="col-card current">
+        <div class="num">01</div>
+        <h4>现任：Maygrove</h4>
+        <p>负责初代 APP 的产品工作。Maygrove 是面向北美都市人群的智能植物种植机，通过 APP 与硬件联动，帮助用户从零养活植物。</p>
       </div>
-      <div class="stat-row">
-        <div class="stat-card">
-          <div class="num">B+C</div>
-          <div class="label">B端与C端产品经验</div>
-        </div>
-        <div class="stat-card">
-          <div class="num">AI 员工</div>
-          <div class="label">数字角色分工协作</div>
-        </div>
+      <div class="col-card">
+        <div class="num">02</div>
+        <h4>之前：平台与创业</h4>
+        <p>阿里、字节等头部互联网公司，做过货架电商与兴趣电商；曾做数字员工平台，把日常工作拆成不同角色互相配合。</p>
       </div>
+      <div class="col-card">
+        <div class="num">03</div>
+        <h4>方法：AI 工作流</h4>
+        <p>今天分享的 4 条 AI 用法，是从平台产品、数字员工创业到硬件创业，反复踩坑踩出来的。</p>
+      </div>
+    </div>
+    
+    <div class="bottom-quote">
+      <span class="mark">“</span>
+      <p>AI 协作的本质，不是替代人，而是把一个人做不过来的信息处理链条，拆成一组能持续配合、可复用的数字角色。</p>
+      <span class="src">— 从数字员工到 AI 工作流</span>
     </div>
   </div>
 
