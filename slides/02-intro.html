@@ -2,77 +2,277 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>02-intro · 自我介绍</title>
+<title>A 方向 · 02 自我介绍</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../shared/tokens.css">
 <style>
-  .slide-content { display: flex; flex-direction: column; background: var(--paper); }
-  .main { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 0 64px; margin-bottom: 60px; }
-  
-  .header-row { display: flex; align-items: flex-end; gap: 48px; margin-bottom: 56px; }
-  .header-row h2 { font-size: 78px; margin-bottom: 0; flex: 1; }
-  .header-row .avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); box-shadow: 0 8px 28px rgba(196,92,38,0.16); }
-  .header-row .name { text-align: right; }
-  .header-row .name .n { font-family: var(--font-display); font-size: 32px; font-weight: 700; }
-  .header-row .name .t { font-size: var(--tiny); color: var(--ink-muted); margin-top: 4px; }
-  
-  .subtitle { font-size: 26px; color: var(--ink-secondary); max-width: 1100px; margin-bottom: 52px; line-height: 1.55; }
-  
-  .columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-bottom: 44px; }
-  .col-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 34px; box-shadow: 0 6px 24px rgba(28,27,24,0.05); }
-  .col-card .num { font-family: var(--font-display); font-size: 40px; font-weight: 900; color: var(--accent); margin-bottom: 14px; line-height: 1; }
-  .col-card h4 { font-family: var(--font-body); font-size: 24px; margin-bottom: 14px; }
-  .col-card p { font-size: var(--small); color: var(--ink-secondary); line-height: 1.6; }
-  .col-card.current { background: var(--dark-block); color: #fff; border-color: transparent; }
-  .col-card.current h4 { color: #fff; }
-  .col-card.current p { color: rgba(255,255,255,0.75); }
-  
-  .bottom-quote { display: flex; gap: 24px; align-items: center; background: var(--accent-pale); border-radius: 16px; padding: 28px 36px; }
-  .bottom-quote .mark { font-family: var(--font-display); font-size: 64px; color: var(--accent); line-height: 1; }
-  .bottom-quote p { font-family: var(--font-display); font-size: 26px; line-height: 1.5; color: var(--ink); flex: 1; }
-  .bottom-quote .src { font-size: var(--tiny); color: var(--ink-muted); white-space: nowrap; }
+  body {
+    background: var(--tech-bg);
+    color: #fff;
+    overflow: hidden;
+  }
+
+  .slide-content { display: flex; flex-direction: column; }
+
+  .page-masthead {
+    border-color: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.4);
+  }
+  .page-masthead .brand { color: rgba(255,255,255,0.65); }
+
+  .page-footer {
+    border-color: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.4);
+  }
+
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 40px;
+  }
+
+  /* 背景：右侧暗橙光晕 + 网格 */
+  .bg-glow {
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,92,38,0.18), transparent 60%);
+    filter: blur(80px);
+    top: -180px;
+    right: -180px;
+    pointer-events: none;
+  }
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 1px) 0 0 / 40px 40px;
+    pointer-events: none;
+    opacity: 0.5;
+    mask-image: radial-gradient(ellipse at 30% 50%, black 0%, transparent 70%);
+  }
+
+  .header-row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    z-index: 2;
+  }
+  .header-row h2 {
+    color: #fff;
+    font-size: 78px;
+    margin-bottom: 0;
+  }
+  .header-row h2 .accent { color: var(--accent-light); }
+
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--accent-light);
+    box-shadow: 0 0 32px rgba(232,123,58,0.3);
+  }
+  .profile .name { text-align: right; }
+  .profile .name .n {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .profile .name .t {
+    font-size: var(--tiny);
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+  }
+
+  .subtitle {
+    font-size: 28px;
+    color: rgba(255,255,255,0.72);
+    max-width: 1100px;
+    margin-bottom: 52px;
+    line-height: 1.55;
+    z-index: 2;
+  }
+
+  .columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 44px;
+    z-index: 2;
+  }
+  .col-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 18px;
+    padding: 36px;
+    transition: all 0.35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .col-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-light), transparent);
+    opacity: 0.6;
+  }
+  .col-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(232,123,58,0.35);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35), 0 0 30px rgba(232,123,58,0.1);
+  }
+  .col-card .num {
+    font-family: var(--font-display);
+    font-size: 44px;
+    font-weight: 900;
+    color: var(--accent-light);
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+  .col-card h4 {
+    font-family: var(--font-body);
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 14px;
+  }
+  .col-card p {
+    font-size: var(--small);
+    color: rgba(255,255,255,0.65);
+    line-height: 1.6;
+  }
+  .col-card.current {
+    background: rgba(232,123,58,0.12);
+    border-color: rgba(232,123,58,0.45);
+  }
+  .col-card.current .num { color: #fff; }
+  .col-card.current::before { opacity: 1; }
+
+  .bottom-quote {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 18px;
+    padding: 30px 40px;
+    z-index: 2;
+    position: relative;
+    overflow: hidden;
+  }
+  .bottom-quote::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--accent-light);
+    box-shadow: 0 0 20px var(--accent-light);
+  }
+  .bottom-quote .mark {
+    font-family: var(--font-display);
+    font-size: 72px;
+    color: var(--accent-light);
+    line-height: 1;
+    opacity: 0.8;
+  }
+  .bottom-quote p {
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.9);
+    flex: 1;
+  }
+  .bottom-quote .src {
+    font-size: var(--tiny);
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+  }
+
+  /* 入场动效 */
+  .anim-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    animation: leftIn 0.8s var(--ease-expo) forwards;
+  }
+  .anim-right {
+    opacity: 0;
+    transform: translateX(40px);
+    animation: rightIn 0.8s var(--ease-expo) forwards;
+  }
+  .anim-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: upIn 0.7s var(--ease-expo) forwards;
+  }
+  @keyframes leftIn { to { opacity: 1; transform: translateX(0); } }
+  @keyframes rightIn { to { opacity: 1; transform: translateX(0); } }
+  @keyframes upIn { to { opacity: 1; transform: translateY(0); } }
+
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+  .delay-5 { animation-delay: 0.5s; }
+  .delay-6 { animation-delay: 0.6s; }
 </style>
 </head>
 <body>
 <div class="slide-content">
+  <div class="bg-glow"></div>
+  <div class="grid-bg"></div>
+
   <div class="page-masthead">
     <div class="brand">AI 工具深度应用</div>
-    <div>2 / 36 · 开场</div>
+    <div>2 / 37 · 开场</div>
   </div>
 
   <div class="main">
     <div class="header-row">
-      <h2>我是谁，以及为什么聊这个<span class="accent">话题</span></h2>
-      <div style="display:flex;gap:20px;align-items:center;">
-        <img class="avatar" src="avatar-02.jpg" alt="Steven">
+      <h2 class="anim-left">我是谁，以及为什么聊这个<span class="accent">话题</span></h2>
+      <div class="profile anim-right">
+        <img class="avatar" src="avatar-02.jpg" alt="Kris">
         <div class="name">
-          <div class="n">Steven</div>
+          <div class="n">Kris</div>
           <div class="t">Maygrove 产品总监</div>
         </div>
       </div>
     </div>
-    
-    <p class="subtitle">从互联网平台到硬件创业，我始终在关注一件事：把复杂的工作流程拆解成可协作、可复用的单元，让信息和执行不再堆在一个人身上。</p>
-    
+
+    <p class="subtitle anim-up delay-1">从互联网平台到硬件创业，我始终在关注一件事：把复杂的工作流程拆解成可协作、可复用的单元，让信息和执行不再堆在一个人身上。</p>
+
     <div class="columns">
-      <div class="col-card current">
+      <div class="col-card current anim-up delay-2">
         <div class="num">01</div>
         <h4>现任：Maygrove</h4>
         <p>负责初代 APP 的产品工作。Maygrove 是面向北美都市人群的智能植物种植机，通过 APP 与硬件联动，帮助用户从零养活植物。</p>
       </div>
-      <div class="col-card">
+      <div class="col-card anim-up delay-3">
         <div class="num">02</div>
         <h4>之前：平台与创业</h4>
         <p>阿里、字节等头部互联网公司，做过货架电商与兴趣电商；曾做数字员工平台，把日常工作拆成不同角色互相配合。</p>
       </div>
-      <div class="col-card">
+      <div class="col-card anim-up delay-4">
         <div class="num">03</div>
         <h4>方法：AI 工作流</h4>
         <p>今天分享的 4 条 AI 用法，是从平台产品、数字员工创业到硬件创业，反复踩坑踩出来的。</p>
       </div>
     </div>
-    
-    <div class="bottom-quote">
+
+    <div class="bottom-quote anim-up delay-6">
       <span class="mark">“</span>
       <p>AI 协作的本质，不是替代人，而是把一个人做不过来的信息处理链条，拆成一组能持续配合、可复用的数字角色。</p>
       <span class="src">— 从数字员工到 AI 工作流</span>
@@ -81,8 +281,9 @@
 
   <div class="page-footer">
     <div class="section-tag">开场 · 自我介绍</div>
-    <div>AI 工具在硬件产品工作中的深度应用</div>
+    <div>AI 工具在产品工作中的深度应用</div>
   </div>
 </div>
+  <script src="../shared/fix-contrast.js"></script>
 </body>
 </html>

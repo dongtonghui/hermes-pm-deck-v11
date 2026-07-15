@@ -74,8 +74,125 @@
     pointer-events: none;
   }
 </style>
+
+<style class="dark-override">
+  /* 深色模式通用覆盖 */
+  body.tech-dark h1, body.tech-dark h2, body.tech-dark h3, body.tech-dark h4 { color: #fff; }
+  body.tech-dark .subtitle { color: rgba(255,255,255,0.72); }
+  body.tech-dark .body-large,
+  body.tech-dark .body-small,
+  body.tech-dark p { color: rgba(255,255,255,0.8); }
+  
+  /* 卡片统一变深色玻璃面板 */
+  .card, .quote-card, .stat-card, .col-card, .reframe-card,
+  .takeaway-card, .assumption-item, .download-card, .check-card,
+  .tool-card, .principle-card, .agent-card, .role-card,
+  .analysis-card, .output-card, .skill-card, .resource-card,
+  .action-card, .practice-card, .value-card, .feature-card,
+  .insight-card, .workshop-card, .legend-card {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: #fff !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25) !important;
+  }
+  .card h3, .card h4, .quote-card h4, .stat-card h4, .col-card h4,
+  .reframe-card h4, .takeaway-card h4, .assumption-item h4,
+  .download-card h4, .tool-card h4, .principle-card h4, .agent-card h4,
+  .role-card h4, .analysis-card h4, .output-card h4, .skill-card h4,
+  .resource-card h4, .action-card h4, .practice-card h4, .value-card h4,
+  .feature-card h4, .insight-card h4, .workshop-card h4, .legend-card h4 {
+    color: #fff !important;
+  }
+  .card p, .quote-card p, .stat-card p, .col-card p, .reframe-card p,
+  .takeaway-card p, .assumption-item p, .download-card p, .tool-card p,
+  .principle-card p, .agent-card p, .role-card p, .analysis-card p,
+  .output-card p, .skill-card p, .resource-card p, .action-card p,
+  .practice-card p, .value-card p, .feature-card p, .insight-card p,
+  .workshop-card p, .legend-card p {
+    color: rgba(255,255,255,0.65) !important;
+  }
+  
+  /* 表格深色 */
+  table { color: rgba(255,255,255,0.85); }
+  th { color: rgba(255,255,255,0.55); border-bottom-color: rgba(255,255,255,0.15); }
+  td { border-bottom-color: rgba(255,255,255,0.08); }
+  
+  /* 列表 */
+  .check-list li { color: rgba(255,255,255,0.7); }
+  .check-list li::before { color: #fff; }
+  
+  /* 输入框、按钮 */
+  input, textarea, select { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #fff; }
+  button, .btn { background: var(--accent); color: #fff; }
+  
+  /* 引用块 */
+  .callout { border-left-color: var(--accent-light); color: #fff; }
+  .bottom-quote { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+  .bottom-quote p { color: rgba(255,255,255,0.9); }
+  .bottom-quote .mark { color: var(--accent-light); }
+  .bottom-quote .src { color: rgba(255,255,255,0.5); }
+  
+  /* 特殊保留的深色卡片 */
+  .col-card.current, .reframe-card.after, .quote-card.dark, .card.dark {
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,255,0.18) !important;
+  }
+  
+  /* 分隔线 */
+  .divider, .separator { background: rgba(255,255,255,0.12); }
+  
+  /* 标签 */
+  .tag, .pill, .badge {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.8);
+  }
+  
+  /* 链接 */
+  a { color: var(--accent-light); }
+  a:hover { color: #fff; }
+
+  /* 更多常见容器的深色覆盖 */
+  .example, .right, .left-panel, .right-panel, .formula,
+  .goal-formula, .reframe-formula, .scenario, .case-box,
+  .template-box, .prompt-box, .output-box, .input-box,
+  .workflow-card, .step-card, .stage-card, .result-card,
+  .metric-card, .demo-card, .summary-card, .takeaway,
+  .note, .box, .panel, .frame, .card-light, .light-card {
+    background: rgba(255,255,255,0.05) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: #fff !important;
+  }
+  .example h4, .right h4, .formula h4, .box h4, .panel h4 {
+    color: #fff !important;
+  }
+  .example p, .right p, .formula p, .box p, .panel p {
+    color: rgba(255,255,255,0.65) !important;
+  }
+  .example strong, .right strong, .formula strong, .box strong, .panel strong {
+    color: var(--accent-light) !important;
+  }
+  
+  /* 反色文本 */
+  .ink, .ink-primary, .dark, .text-ink { color: #fff !important; }
+  .ink-secondary, .text-secondary { color: rgba(255,255,255,0.65) !important; }
+  .text-muted { color: rgba(255,255,255,0.45) !important; }
+  
+  /* 暖色变量直接替换 */
+  :root { --paper: #151514; --paper-warm: #151514; --line: rgba(255,255,255,0.12); }
+
+
+  /* 更多深色覆盖 */
+  .ink, .ink-primary, .text-ink { color: #fff !important; }
+  .ink-secondary, .text-secondary, .secondary, .text-muted { color: rgba(255,255,255,0.65) !important; }
+  .kicker-light { color: rgba(255,255,255,0.6) !important; }
+  .card-light, .light-card { background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.12) !important; color: #fff !important; }
+
+
+</style>
+
 </head>
-<body class="tech-dark">
+<body class="tech-dark" style="background: var(--tech-bg); color: #fff;">
 <div class="slide-content">
   <div class="grid-bg"></div>
   <div class="glow"></div>
@@ -177,5 +294,6 @@
     <div>AI 工具在产品工作中的深度应用</div>
   </div>
 </div>
+  <script src="../shared/fix-contrast.js"></script>
 </body>
 </html>

@@ -38,8 +38,8 @@
     { file: "slides/19-competitor-crosscheck.html", label: "竞品视角与交叉校验" },
     { file: "slides/20-analysis-template.html", label: "多 Agent 需求分析模板" },
     { file: "slides/21-reddit-why.html", label: "人人都可以实现的 Reddit 舆情分析" },
-    { file: "slides/23-reddit-workflow.html", label: "Reddit 情报工作流" },
     { file: "slides/22-reddit-case.html", label: "目标社区与关键词" },
+    { file: "slides/23-reddit-workflow.html", label: "Reddit 情报工作流" },
     { file: "slides/24-reddit-output.html", label: "结构化洞察报告" },
     { file: "slides/25-reddit-auto.html", label: "Reddit 自动化" },
     { file: "slides/26-why-skill.html", label: "为什么要封装成 Skill" },
@@ -74,24 +74,25 @@
   body[data-ov="grid"]    #ov-gallery { display: none; }
   body[data-ov="gallery"] #ov-grid    { display: none; }
   body[data-ov="gallery"][data-mode="overview"] { background: #0a0805; }
-  body[data-ov="grid"][data-mode="overview"]    { background: #efece4; }
+  body[data-ov="grid"][data-mode="overview"]    { background: #0a0a08; }
 
   /* ════════ 模式 1 · 自适应网格墙（一屏装得下→居中轻斜；装不下→舒适大小竖向滚动）════════ */
   #ov-grid { display: flex; justify-content: center; perspective: 2200px; perspective-origin: 50% 42%;
-    background: radial-gradient(120% 90% at 50% 0%, #f4f1e9, #e7e3d8 75%); }
+    background: radial-gradient(120% 90% at 50% 0%, #181612, #0a0a08 75%); }
   body[data-grid="fit"]    #ov-grid { overflow: hidden;   align-items: center; }
   body[data-grid="scroll"] #ov-grid { overflow-y: auto; overflow-x: hidden; align-items: flex-start; padding: 74px 0 110px; }
   .wall-wrap { }
   body[data-grid="fit"]    .wall-wrap { transform: translateY(-3vh); }
   .wall { display: grid; gap: 20px; transform-origin: center center; margin: 0 auto; }  /* 不用 preserve-3d：整墙作单个倾斜平面，命中测试可靠 */
   #ov-grid .card {
-    position: relative; aspect-ratio: 16/9; border-radius: 9px; overflow: hidden; background: #fff; cursor: pointer;
-    box-shadow: 0 16px 34px rgba(40,34,24,0.20), 0 3px 10px rgba(40,34,24,0.12);
+    position: relative; aspect-ratio: 16/9; border-radius: 9px; overflow: hidden; background: rgba(255,255,255,0.05); cursor: pointer;
+    box-shadow: 0 16px 34px rgba(0,0,0,0.35), 0 3px 10px rgba(0,0,0,0.22); border: 1px solid rgba(255,255,255,0.08);
     transition: transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s;
   }
   #ov-grid .card:hover {
     transform: scale(1.18);
-    box-shadow: 0 48px 92px rgba(40,34,24,0.36), 0 14px 30px rgba(40,34,24,0.22); z-index: 20;
+    box-shadow: 0 48px 92px rgba(0,0,0,0.55), 0 14px 30px rgba(0,0,0,0.35), 0 0 32px rgba(232,123,58,0.15); z-index: 20;
+    border-color: rgba(255,255,255,0.18);
   }
 
   /* ════════ 模式 2 · 无限画廊 ════════ */
@@ -124,17 +125,17 @@
   #ov-gallery .card:hover .num { opacity: 1; }
 
   .overview-title { position: fixed; top: 24px; left: 0; right: 0; text-align: center; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; z-index: 40; pointer-events: none; }
-  body[data-ov="grid"]    .overview-title { color: #5a5346; opacity: 0.66; }
+  body[data-ov="grid"]    .overview-title { color: rgba(244,238,224,0.7); opacity: 0.66; }
   body[data-ov="gallery"] .overview-title { color: rgba(244,238,224,0.7); text-shadow: 0 2px 12px rgba(0,0,0,0.6); }
 
   .start-btn { position: fixed; bottom: 26px; right: 26px; border: 0; padding: 13px 24px; border-radius: 999px; font-size: 15px; font-family: inherit; letter-spacing: 0.04em; cursor: pointer; z-index: 200; transition: transform .18s, box-shadow .18s; }
-  body[data-ov="grid"]    .start-btn { background: #1a1712; color: #fff; box-shadow: 0 8px 28px rgba(40,34,24,0.28); }
+  body[data-ov="grid"]    .start-btn { background: #f4eee0; color: #1a1712; box-shadow: 0 8px 28px rgba(0,0,0,0.35); }
   body[data-ov="gallery"] .start-btn { background: #f4eee0; color: #1a1712; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
   .start-btn:hover { transform: translateY(-2px); }
 
   /* ════════ 演示模式 ════════ */
-  #stage { position: fixed; top: 50%; left: 50%; transform-origin: top left; will-change: transform; background: #fff; box-shadow: 0 10px 60px rgba(0,0,0,0.4); }
-  #stage iframe { width: 100%; height: 100%; border: 0; display: block; background: #fff; }
+  #stage { position: fixed; top: 50%; left: 50%; transform-origin: top left; will-change: transform; background: #0a0a08; box-shadow: 0 10px 60px rgba(0,0,0,0.6); }
+  #stage iframe { width: 100%; height: 100%; border: 0; display: block; background: #0a0a08; }
   .counter { position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.65); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 13px; letter-spacing: 0.05em; font-variant-numeric: tabular-nums; z-index: 100; opacity: 0.7; }
   .counter .label { color: rgba(255,255,255,0.7); margin-left: 8px; }
   .overview-btn { position: fixed; top: 20px; left: 20px; background: rgba(0,0,0,0.55); color: rgba(255,255,255,0.85); border: 0; padding: 7px 14px; border-radius: 999px; font-size: 13px; font-family: inherit; cursor: pointer; z-index: 100; opacity: 0.6; }
@@ -391,36 +392,55 @@
   fit(); show(current);
   if (hashMatch) setMode('present'); else { setMode('overview'); buildOverview(); }
 
+
   window.addEventListener('beforeprint', () => { printStack.innerHTML = ''; deck.forEach(item => { const f = document.createElement('iframe'); f.src = item.file; printStack.appendChild(f); }); printStack.style.display = 'block'; stage.style.display = 'none'; });
   window.addEventListener('afterprint', () => { printStack.innerHTML = ''; printStack.style.display = 'none'; stage.style.display = ''; });
 })();
 </script>
 
-  // deck navigation buttons
+<!-- deck navigation buttons -->
+<div class="deck-nav" id="deckNav" style="display:none;">
+  <button class="nav-btn" id="navPrev">‹</button>
+  <button class="nav-btn" id="navNext">›</button>
+</div>
+
+<script>
+(function () {
+  const deck = window.DECK_MANIFEST || [];
   const deckNav = document.getElementById('deckNav');
   const navPrev = document.getElementById('navPrev');
   const navNext = document.getElementById('navNext');
+  const frame = document.getElementById('frame');
+  let current = 0;
+
+  function show(idx) {
+    if (idx < 0 || idx >= deck.length) return;
+    current = idx;
+    if (frame) frame.src = deck[idx].file;
+    updateNav();
+  }
   function updateNav() {
     if (!deckNav) return;
-    const inOverview = document.getElementById('overview').style.display !== 'none';
+    const inOverview = document.body.getAttribute('data-mode') !== 'present';
     deckNav.style.display = inOverview ? 'none' : 'flex';
-    if (!inOverview) {
-      navPrev.disabled = current <= 0;
-      navNext.disabled = current >= deck.length - 1;
-    }
+    if (navPrev) navPrev.disabled = current <= 0;
+    if (navNext) navNext.disabled = current >= deck.length - 1;
   }
   if (navPrev) navPrev.addEventListener('click', () => show(current - 1));
   if (navNext) navNext.addEventListener('click', () => show(current + 1));
-  // update visibility whenever we switch views
-  const origShow = show; window.show = function(idx) { origShow(idx); updateNav(); };
-  const origShowOverview = showOverview; window.showOverview = function() { origShowOverview(); updateNav(); };
-  const origShowPresent = showPresent; window.showPresent = function() { origShowPresent(); updateNav(); };
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') show(current - 1);
-    if (e.key === 'ArrowRight' || e.key === ' ') show(current + 1);
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (document.body.getAttribute('data-mode') !== 'present') return;
+    if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); show(current + 1); }
   });
-  // initial update
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((m) => { if (m.attributeName === 'data-mode') updateNav(); });
+  });
+  observer.observe(document.body, { attributes: true });
   updateNav();
+})();
 </script>
+
 </body>
 </html>

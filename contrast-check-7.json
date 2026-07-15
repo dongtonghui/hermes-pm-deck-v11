@@ -1,0 +1,128 @@
+{
+  "18-business-perspective.html": [],
+  "19-competitor-crosscheck.html": [
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "用户视角：1200 帖中仅 1 条明确提及氛围灯；真正的问题是光污染",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "技术视角：增加成本、复杂度、散热与可靠性风险",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "商业视角：难以支撑溢价，卖点易被跟进",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "竞品视角：主流品牌不以氛围灯为核心卖点",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "H4",
+      "className": "",
+      "text": "交叉校验发现",
+      "fg": "rgba(154,69,28,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 2.75,
+      "parentClasses": "check-card findings"
+    }
+  ],
+  "23-reddit-workflow.html": [],
+  "28-hermes-skill.html": [],
+  "31-full-loop.html": [],
+  "32-workshop-1.html": [
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "智能花盆（自动浇水 + 光照监测）",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "桌面空气净化器",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "便携咖啡加热杯",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "你手边的真实项目",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "分成 4 组：用户 / 技术 / 商业 / 竞品",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "每组用 2 分钟写一个视角分析",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "用 1 分钟互相挑战，找漏洞",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    },
+    {
+      "tag": "LI",
+      "className": "",
+      "text": "用 1 分钟给出最终判断：这个功能做不做？",
+      "fg": "rgba(74,71,64,1.00)",
+      "bg": "rgb(24,24,21)",
+      "ratio": 1.92,
+      "parentClasses": ""
+    }
+  ],
+  "36-resources.html": []
+}
