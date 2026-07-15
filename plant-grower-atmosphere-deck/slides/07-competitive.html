@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>07 · 竞品视角</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .comp-page { width: 100%; height: 100%; display: flex; flex-direction: column; }
+  
+  .comp-table-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+  }
+  
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .comp-table th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: rgba(0,0,0,0.02);
+    border-bottom: 2px solid var(--border);
+  }
+  
+  .comp-table th:first-child { border-radius: 8px 0 0 0; }
+  .comp-table th:last-child { border-radius: 0 8px 0 0; }
+  
+  .comp-table td {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  
+  .comp-table tr:last-child td { border-bottom: none; }
+  
+  .comp-table td:first-child {
+    font-weight: 700;
+    color: var(--ink);
+    width: 130px;
+  }
+  
+  .comp-table td:nth-child(2) {
+    width: 110px;
+    font-weight: 600;
+  }
+  
+  .comp-table td:nth-child(3) {
+    width: 180px;
+  }
+  
+  .status-yes { color: var(--primary); font-weight: 700; }
+  .status-no { color: var(--ink-muted); }
+  .status-partial { color: var(--accent); font-weight: 700; }
+  .status-limited { color: var(--highlight); font-weight: 700; }
+  
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 28px;
+  }
+  
+  .insight-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  
+  .insight-number {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 10px;
+  }
+  
+  .insight-title {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  
+  .insight-desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+  
+  .opportunity-banner {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: rgba(45, 90, 61, 0.06);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 12px 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .opportunity-banner .icon {
+    font-size: 24px;
+  }
+  
+  .opportunity-banner .text {
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  
+  .opportunity-banner .text strong { color: var(--primary); }
+  
+  .source-note {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 12px;
+  }
+</style>
+</head>
+<body>
+  <div class="page-masthead">
+    <div class="logo">植物 grower · 需求分析</div>
+    <div class="meta">07 / 竞品视角</div>
+  </div>
+  
+  <div class="page-content">
+    <div class="kicker">竞品视角 · 专业品牌保守，白牌激进</div>
+    <h2>主流竞品未做全彩 RGB，存在差异化窗口</h2>
+    
+    <div class="comp-table-wrap">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th>竞品/品牌</th>
+            <th>氛围灯</th>
+            <th>核心卖点</th>
+            <th>氛围灯策略</th>
+            <th>为何做/没做</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AeroGarden</td>
+            <td class="status-limited">部分微光</td>
+            <td>易用、种子胶囊、发芽保证</td>
+            <td>高端款有弱光夜灯，非 RGB</td>
+            <td>保持专业种植工具定位，避免喧宾夺主</td>
+          </tr>
+          <tr>
+            <td>Click & Grow</td>
+            <td class="status-no">无显著功能</td>
+            <td>北欧极简、种子胶囊、低维护</td>
+            <td>完全不做氛围灯</td>
+            <td>极简设计 DNA，拒绝功能堆砌</td>
+          </tr>
+          <tr>
+            <td>飞利浦/昕诺飞</td>
+            <td class="status-partial">可调亮度</td>
+            <td>专业光配方、能效、植物科研背书</td>
+            <td>少量可调光，非装饰灯效</td>
+            <td>品牌定位「植物健康」，非家居装饰</td>
+          </tr>
+          <tr>
+            <td>小米/米家</td>
+            <td class="status-partial">可调色温</td>
+            <td>智能家居联动、性价比、IoT 生态</td>
+            <td>暖白/冷白切换，联动米家场景</td>
+            <td>生态自然延伸，氛围灯是场景联动一部分</td>
+          </tr>
+          <tr>
+            <td>国内白牌/植物工场</td>
+            <td class="status-yes">全彩 RGB</td>
+            <td>低价、多功能、视觉差异化</td>
+            <td>RGB 呼吸灯效作为卖点</td>
+            <td>靠外观灯效吸引眼球，体验参差不齐</td>
+          </tr>
+          <tr>
+            <td>Rise Gardens / Edn</td>
+            <td class="status-no">无或极简</td>
+            <td>高端材质、模块化、专业种植</td>
+            <td>不做氛围灯</td>
+            <td>高端专业定位，氛围灯不符品牌调性</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="source-note">
+        信息来源：基于各品牌官网、产品页与公开资料推断；部分竞品信息可能随产品更新变化。
+      </div>
+    </div>
+    
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-number">01</div>
+        <div class="insight-title">主流专业品牌未做 RGB</div>
+        <div class="insight-desc">AeroGarden、Click & Grow、飞利浦均持谨慎态度，说明行业对植物光周期干扰有顾虑。</div>
+      </div>
+      
+      <div class="insight-card">
+        <div class="insight-number">02</div>
+        <div class="insight-title">市场分层明显</div>
+        <div class="insight-desc">专业品牌（功能导向）vs 小米/白牌（外观/生态导向）策略不同，需明确我们进入哪个战场。</div>
+      </div>
+      
+      <div class="insight-card">
+        <div class="insight-number">03</div>
+        <div class="insight-title">不做≠没机会</div>
+        <div class="insight-desc">竞品保守可能意味着市场尚未被教育，也可能意味着需求不足——需要验证而非假设。</div>
+      </div>
+      
+      <div class="insight-card">
+        <div class="insight-number">04</div>
+        <div class="insight-title">差异化窗口有限</div>
+        <div class="insight-desc">若氛围灯被证明不影响植物生长，技术门槛低，竞品易跟进，需靠软件订阅建立壁垒。</div>
+      </div>
+    </div>
+    
+    <div class="opportunity-banner">
+      <span class="icon">✦</span>
+      <div class="text">
+        <strong>差异化机会：</strong> 以「独立灯带 + 可调色温 + 不干扰植物光周期」为技术背书，打造「植物级氛围灯」概念，区别于白牌 RGB 和专业品牌的保守路线。
+      </div>
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div>植物照射灯氛围灯功能需求分析</div>
+    <div>07 / 11</div>
+  </div>
+</body>
+</html>

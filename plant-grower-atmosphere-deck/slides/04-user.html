@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>04 · 用户视角</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .user-page { width: 100%; height: 100%; display: flex; flex-direction: column; }
+  
+  .user-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    flex: 1;
+    margin-top: 24px;
+  }
+  
+  .persona-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .persona-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 24px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    box-shadow: 0 2px 12px var(--shadow);
+  }
+  
+  .persona-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: var(--font-display);
+  }
+  
+  .persona-content { flex: 1; }
+  
+  .persona-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  
+  .persona-desc {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  
+  .persona-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  
+  .pay-scale {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .scale-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  
+  .scale-sub {
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin-bottom: 28px;
+  }
+  
+  .scale-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+  }
+  
+  .scale-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  
+  .scale-label {
+    width: 80px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-light);
+    text-align: right;
+  }
+  
+  .scale-track {
+    flex: 1;
+    height: 28px;
+    background: #F0EEE8;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .scale-fill {
+    height: 100%;
+    border-radius: 6px;
+    position: relative;
+  }
+  
+  .scale-fill.high { background: var(--primary); }
+  .scale-fill.medium { background: var(--accent); }
+  .scale-fill.low { background: var(--ink-muted); }
+  
+  .scale-value {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .scale-fill.low .scale-value { color: var(--ink-light); }
+  
+  .evidence-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  
+  .evidence-card {
+    padding: 22px;
+    border-radius: 12px;
+  }
+  
+  .evidence-card.pro {
+    background: rgba(45, 90, 61, 0.04);
+    border: 1px solid rgba(45, 90, 61, 0.12);
+  }
+  
+  .evidence-card.con {
+    background: rgba(181, 74, 58, 0.04);
+    border: 1px solid rgba(181, 74, 58, 0.12);
+  }
+  
+  .evidence-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  
+  .evidence-card.pro .evidence-title { color: var(--primary); }
+  .evidence-card.con .evidence-title { color: var(--caution); }
+  
+  .evidence-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .evidence-list li {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    padding: 8px 0;
+    padding-left: 18px;
+    position: relative;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  
+  .evidence-list li:last-child { border-bottom: none; }
+  
+  .evidence-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--ink-muted);
+  }
+  
+  .fact-tag, .guess-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 6px;
+    letter-spacing: 0.02em;
+  }
+  
+  .fact-tag { background: rgba(45, 90, 61, 0.1); color: var(--primary); }
+  .guess-tag { background: rgba(154, 154, 147, 0.15); color: var(--ink-muted); }
+</style>
+</head>
+<body>
+  <div class="page-masthead">
+    <div class="logo">植物 grower · 需求分析</div>
+    <div class="meta">04 / 用户视角</div>
+  </div>
+  
+  <div class="page-content">
+    <div class="kicker">用户视角 · 细分溢价功能</div>
+    <h2>氛围灯不是种植刚需，而是家居/送礼溢价点</h2>
+    
+    <div class="user-grid">
+      <div class="left-col">
+        <div class="persona-list">
+          <div class="persona-card">
+            <div class="persona-avatar">家</div>
+            <div class="persona-content">
+              <div class="persona-title">家居氛围导向的中产家庭</div>
+              <div class="persona-desc">把种植机当作客厅/厨房装饰品，愿意为「好看」和「氛围」付费</div>
+              <div class="persona-tags">
+                <span class="tag tag-green">愿付费</span>
+                <span class="tag tag-green">客厅场景</span>
+                <span class="tag tag-amber">推测</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="persona-card">
+            <div class="persona-avatar" style="background: var(--accent);">礼</div>
+            <div class="persona-content">
+              <div class="persona-title">送礼/尝鲜型用户</div>
+              <div class="persona-desc">节日/乔迁礼物场景，氛围灯让产品听起来更高级、更有卖点</div>
+              <div class="persona-tags">
+                <span class="tag tag-green">愿付费</span>
+                <span class="tag tag-green">礼品场景</span>
+                <span class="tag tag-amber">推测</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="persona-card">
+            <div class="persona-avatar" style="background: var(--highlight); color: #5A4A2A;">智</div>
+            <div class="persona-content">
+              <div class="persona-title">智能家居/IoT 爱好者</div>
+              <div class="persona-desc">对可调色温、App 控制、场景联动等附加功能接受度高</div>
+              <div class="persona-tags">
+                <span class="tag tag-green">愿付费</span>
+                <span class="tag tag-green">生态联动</span>
+                <span class="tag tag-green">事实</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="persona-card">
+            <div class="persona-avatar" style="background: var(--ink-muted);">种</div>
+            <div class="persona-content">
+              <div class="persona-title">核心种植人群（新手/发烧友）</div>
+              <div class="persona-desc">首要关注「能不能种活」，氛围灯无法解决核心种植焦虑，不愿多花钱</div>
+              <div class="persona-tags">
+                <span class="tag tag-red">不敏感</span>
+                <span class="tag tag-red">价格敏感</span>
+                <span class="tag tag-amber">推测</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="right-col">
+        <div class="pay-scale">
+          <div class="scale-title">付费意愿分级</div>
+          <div class="scale-sub">基于用户类型与场景的分层判断</div>
+          
+          <div class="scale-bar">
+            <div class="scale-item">
+              <div class="scale-label">家居装饰</div>
+              <div class="scale-track">
+                <div class="scale-fill high" style="width: 85%;">
+                  <span class="scale-value">高</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="scale-item">
+              <div class="scale-label">送礼用户</div>
+              <div class="scale-track">
+                <div class="scale-fill high" style="width: 80%;">
+                  <span class="scale-value">高</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="scale-item">
+              <div class="scale-label">IoT 用户</div>
+              <div class="scale-track">
+                <div class="scale-fill high" style="width: 75%;">
+                  <span class="scale-value">高</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="scale-item">
+              <div class="scale-label">新手种植者</div>
+              <div class="scale-track">
+                <div class="scale-fill medium" style="width: 45%;">
+                  <span class="scale-value">中</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="scale-item">
+              <div class="scale-label">植物发烧友</div>
+              <div class="scale-track">
+                <div class="scale-fill low" style="width: 20%;">
+                  <span class="scale-value">低</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="evidence-grid">
+      <div class="evidence-card pro">
+        <div class="evidence-title">支持增加氛围灯</div>
+        <ul class="evidence-list">
+          <li>智能家居、氛围照明是主流消费趋势<span class="fact-tag">事实</span></li>
+          <li>多功能产品比单一工具更能支撑高客单价<span class="fact-tag">事实</span></li>
+          <li>解决红/蓝植物灯的「实验室感」审美问题<span class="fact-tag">事实</span></li>
+          <li>让种植机从厨房工具扩展到客厅/卧室<span class="guess-tag">推测</span></li>
+        </ul>
+      </div>
+      
+      <div class="evidence-card con">
+        <div class="evidence-title">反对增加氛围灯</div>
+        <ul class="evidence-list">
+          <li>核心痛点是「植物养不活」，氛围灯不解决<span class="fact-tag">事实</span></li>
+          <li>RGB/驱动/App 增加 BOM 成本和售价<span class="fact-tag">事实</span></li>
+          <li>夜间光可能干扰植物暗期/光周期<span class="fact-tag">事实</span></li>
+          <li>更多功能 = 更高学习成本与故障点<span class="guess-tag">推测</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div>植物照射灯氛围灯功能需求分析</div>
+    <div>04 / 11</div>
+  </div>
+</body>
+</html>

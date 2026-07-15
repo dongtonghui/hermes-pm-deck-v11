@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>02 · 四视角分析框架</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .framework-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .framework-top {
+    padding: 0 0 48px 0;
+  }
+  
+  .framework-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    flex: 1;
+  }
+  
+  .lens-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px var(--shadow);
+    transition: transform 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .lens-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  
+  .lens-card.user::before { background: var(--primary); }
+  .lens-card.tech::before { background: var(--accent); }
+  .lens-card.biz::before { background: var(--highlight); }
+  .lens-card.comp::before { background: #7A9A8C; }
+  
+  .lens-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    font-family: var(--font-display);
+  }
+  
+  .lens-card.user .lens-icon { background: rgba(45, 90, 61, 0.08); color: var(--primary); }
+  .lens-card.tech .lens-icon { background: rgba(196, 122, 74, 0.1); color: var(--accent); }
+  .lens-card.biz .lens-icon { background: rgba(212, 160, 86, 0.12); color: #8A6A2E; }
+  .lens-card.comp .lens-icon { background: rgba(122, 154, 140, 0.12); color: #5A7A6C; }
+  
+  .lens-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .lens-sub {
+    font-size: 14px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  
+  .lens-points {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 auto 0;
+    flex: 1;
+  }
+  
+  .lens-points li {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-light);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    padding-left: 20px;
+  }
+  
+  .lens-points li:last-child {
+    border-bottom: none;
+  }
+  
+  .lens-points li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  
+  .lens-verdict {
+    margin-top: 24px;
+    padding: 16px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  
+  .lens-card.user .lens-verdict { background: rgba(45, 90, 61, 0.06); color: var(--primary); }
+  .lens-card.tech .lens-verdict { background: rgba(196, 122, 74, 0.08); color: var(--accent); }
+  .lens-card.biz .lens-verdict { background: rgba(212, 160, 86, 0.1); color: #8A6A2E; }
+  .lens-card.comp .lens-verdict { background: rgba(122, 154, 140, 0.08); color: #5A7A6C; }
+  
+  .bottom-note {
+    margin-top: 40px;
+    padding: 20px 24px;
+    background: rgba(45, 90, 61, 0.04);
+    border-left: 3px solid var(--primary);
+    border-radius: 0 10px 10px 0;
+    font-size: 18px;
+    color: var(--ink-light);
+    line-height: 1.6;
+  }
+  
+  .bottom-note strong {
+    color: var(--primary);
+  }
+</style>
+</head>
+<body>
+  <div class="page-masthead">
+    <div class="logo">植物 grower · 需求分析</div>
+    <div class="meta">02 / 四视角分析框架</div>
+  </div>
+  
+  <div class="page-content">
+    <div class="framework-top">
+      <div class="kicker">分析方法</div>
+      <h2>四个独立视角，交叉校验</h2>
+      <p class="body-text" style="margin:0;">通过用户、技术、商业、竞品四个视角独立分析，降低 AI 幻觉和单一视角偏差，再由资深产品评审做交叉校验。</p>
+    </div>
+    
+    <div class="framework-grid">
+      <div class="lens-card user">
+        <div class="lens-icon">用</div>
+        <div class="lens-title">用户视角</div>
+        <div class="lens-sub">User Research</div>
+        <ul class="lens-points">
+          <li>目标用户是谁？细分人群？</li>
+          <li>真实使用场景与痛点</li>
+          <li>付费意愿与价格敏感度</li>
+        </ul>
+        <div class="lens-verdict">核心种植人群不敏感，家居/送礼/智能用户愿为细分溢价付费</div>
+      </div>
+      
+      <div class="lens-card tech">
+        <div class="lens-icon">技</div>
+        <div class="lens-title">技术视角</div>
+        <div class="lens-sub">Hardware Engineering</div>
+        <ul class="lens-points">
+          <li>BOM 成本与供应链影响</li>
+          <li>散热、寿命、能耗、主功能干扰</li>
+          <li>认证（安规/EMC）复测范围</li>
+        </ul>
+        <div class="lens-verdict">推荐独立灯带方案 A；主灯扩展方案 B 风险高、成本大</div>
+      </div>
+      
+      <div class="lens-card biz">
+        <div class="lens-icon">商</div>
+        <div class="lens-title">商业视角</div>
+        <div class="lens-sub">Business Analyst</div>
+        <ul class="lens-points">
+          <li>市场规模与增长趋势</li>
+          <li>目标价格带与溢价空间</li>
+          <li>渠道接受度与 ROI 估算</li>
+        </ul>
+        <div class="lens-verdict">中端可调色温方案 ROI 约 72%，需叠加促购效应</div>
+      </div>
+      
+      <div class="lens-card comp">
+        <div class="lens-icon">竞</div>
+        <div class="lens-title">竞品视角</div>
+        <div class="lens-sub">Competitive Analysis</div>
+        <ul class="lens-points">
+          <li>主流品牌做/不做氛围灯</li>
+          <li>核心卖点与差异化机会</li>
+          <li>为什么竞品保守/激进</li>
+        </ul>
+        <div class="lens-verdict">专业品牌普遍未做全彩 RGB，小米/白牌做可调色温/RGB</div>
+      </div>
+    </div>
+    
+    <div class="bottom-note">
+      <strong>交叉校验结论：</strong> 氛围灯是细分溢价功能，技术可行但需求证据薄弱；不建议作为全系标配或 P0 项目，应以高端/可选 SKU 形式验证。
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div>植物照射灯氛围灯功能需求分析</div>
+    <div>02 / 11</div>
+  </div>
+</body>
+</html>

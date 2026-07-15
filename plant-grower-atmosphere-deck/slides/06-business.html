@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>06 · 商业视角</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .biz-page { width: 100%; height: 100%; display: flex; flex-direction: column; }
+  
+  .biz-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 40px;
+    flex: 1;
+    margin-top: 24px;
+  }
+  
+  .market-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .market-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .market-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    flex: 1;
+  }
+  
+  .market-stat {
+    padding: 20px;
+    background: rgba(0,0,0,0.02);
+    border-radius: 12px;
+  }
+  
+  .market-stat .value {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 36px;
+    color: var(--primary);
+    margin-bottom: 6px;
+  }
+  
+  .market-stat .label {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+  
+  .roi-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .roi-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+  
+  .roi-sub {
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin-bottom: 28px;
+  }
+  
+  .roi-chart {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+  }
+  
+  .roi-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .roi-name {
+    width: 120px;
+    font-size: 13px;
+    color: var(--ink-light);
+    text-align: right;
+  }
+  
+  .roi-track {
+    flex: 1;
+    height: 32px;
+    background: #F0EEE8;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .roi-fill {
+    height: 100%;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+  }
+  
+  .roi-fill.rec { background: var(--primary); }
+  .roi-fill.rgb { background: var(--accent); }
+  .roi-fill.premium { background: var(--highlight); }
+  .roi-fill.basic { background: var(--ink-muted); }
+  
+  .channel-section {
+    grid-column: 1 / -1;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+  
+  .channel-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .channel-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  
+  .channel-item {
+    text-align: center;
+    padding: 18px 12px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.02);
+  }
+  
+  .channel-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  
+  .channel-score {
+    font-size: 13px;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  
+  .channel-score.medium { color: var(--accent); }
+  .channel-score.low { color: var(--ink-muted); }
+  
+  .channel-desc {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 6px;
+    line-height: 1.4;
+  }
+  
+  .risk-pill {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 16px;
+  }
+  
+  .risk-pill { background: rgba(181, 74, 58, 0.08); color: var(--caution); }
+  
+  .roi-note {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: rgba(212, 160, 86, 0.06);
+    border-left: 3px solid var(--highlight);
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+  
+  .roi-note strong { color: var(--ink); }
+</style>
+</head>
+<body>
+  <div class="page-masthead">
+    <div class="logo">植物 grower · 需求分析</div>
+    <div class="meta">06 / 商业视角</div>
+  </div>
+  
+  <div class="page-content">
+    <div class="kicker">商业视角 · 中端方案 ROI 约 72%</div>
+    <h2>市场增长，但溢价必须叠加促购效应才能回本</h2>
+    
+    <div class="biz-layout">
+      <div class="market-card">
+        <div class="market-title">全球智能室内种植机市场</div>
+        
+        <div class="market-stats">
+          <div class="market-stat">
+            <div class="value">14–21</div>
+            <div class="label">2025 年市场规模（亿美元）</div>
+          </div>
+          
+          <div class="market-stat">
+            <div class="value">35–55</div>
+            <div class="label">2030 年预测规模（亿美元）</div>
+          </div>
+          
+          <div class="market-stat">
+            <div class="value">15–22%</div>
+            <div class="label">年复合增长率 CAGR</div>
+          </div>
+          
+          <div class="market-stat">
+            <div class="value">800–1500</div>
+            <div class="label">2025 年全球年销量（万台）</div>
+          </div>
+        </div>
+        
+        <div class="risk-pill">关键假设：市场持续增长，品类低渗透</div>
+      </div>
+      
+      <div class="roi-card">
+        <div class="roi-title">不同方案 ROI 估算</div>
+        <div class="roi-sub">10 万台年销量基线 · 基线 ASP $140 · 基线毛利率 35%</div>
+        
+        <div class="roi-chart">
+          <div class="roi-row">
+            <div class="roi-name">可调色温</div>
+            <div class="roi-track">
+              <div class="roi-fill rec" style="width: 72%;">72%</div>
+            </div>
+          </div>
+          
+          <div class="roi-row">
+            <div class="roi-name">全彩 RGB+App</div>
+            <div class="roi-track">
+              <div class="roi-fill rgb" style="width: 112%;">112%</div>
+            </div>
+          </div>
+          
+          <div class="roi-row">
+            <div class="roi-name">高端全彩联动</div>
+            <div class="roi-track">
+              <div class="roi-fill premium" style="width: 143%;">143%</div>
+            </div>
+          </div>
+          
+          <div class="roi-row">
+            <div class="roi-name">基础双色温</div>
+            <div class="roi-track">
+              <div class="roi-fill basic" style="width: 5%;">5%</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="roi-note">
+          <strong>注意：</strong> 仅溢价转化不足以回本，必须叠加「促购效应 + ASP 提升」。72% ROI 是单点估算，需敏感性分析验证。
+        </div>
+      </div>
+      
+      <div class="channel-section">
+        <div class="channel-title">渠道接受度</div>
+        
+        <div class="channel-grid">
+          <div class="channel-item">
+            <div class="channel-name">天猫/京东/Amazon</div>
+            <div class="channel-score">高</div>
+            <div class="channel-desc">视觉卖点，短视频/详情页转化好</div>
+          </div>
+          
+          <div class="channel-item">
+            <div class="channel-name">线下家居店</div>
+            <div class="channel-score medium">中</div>
+            <div class="channel-desc">需场景化陈列支撑溢价</div>
+          </div>
+          
+          <div class="channel-item">
+            <div class="channel-name">Costco/Sam's</div>
+            <div class="channel-score low">中低</div>
+            <div class="channel-desc">价格敏感，需保留基础款</div>
+          </div>
+          
+          <div class="channel-item">
+            <div class="channel-name">B2B/礼品</div>
+            <div class="channel-score">高</div>
+            <div class="channel-desc">绿植+氛围灯=高端装饰</div>
+          </div>
+          
+          <div class="channel-item">
+            <div class="channel-name">DTC 独立站</div>
+            <div class="channel-score">高</div>
+            <div class="channel-desc">欧美中产家居氛围需求强</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div>植物照射灯氛围灯功能需求分析</div>
+    <div>06 / 11</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>03 · 产品目标与约束</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .constraint-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .constraint-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    flex: 1;
+    margin-top: 24px;
+  }
+  
+  .constraint-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .constraint-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .constraint-table tr:last-child {
+    border-bottom: none;
+  }
+  
+  .constraint-table td {
+    padding: 22px 0;
+    vertical-align: top;
+  }
+  
+  .constraint-table td:first-child {
+    width: 140px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+  
+  .constraint-table td:last-child {
+    font-size: 20px;
+    color: var(--ink);
+    line-height: 1.5;
+    padding-left: 24px;
+  }
+  
+  .constraint-visual {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+  
+  .device-diagram {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .diagram-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--ink-light);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  
+  .diagram-box {
+    width: 380px;
+    height: 420px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, #F5F5F2 0%, #EAE8E3 100%);
+    border: 2px solid var(--border);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+  }
+  
+  .main-lamp {
+    width: 280px;
+    height: 24px;
+    background: var(--primary);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(45, 90, 61, 0.2);
+    position: relative;
+  }
+  
+  .main-lamp::after {
+    content: "主灯 · 植物补光";
+    position: absolute;
+    top: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    white-space: nowrap;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  
+  .light-beam {
+    position: absolute;
+    top: 64px;
+    left: 50px;
+    width: 280px;
+    height: 200px;
+    background: linear-gradient(180deg, rgba(45, 90, 61, 0.15) 0%, rgba(45, 90, 61, 0) 100%);
+    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+  }
+  
+  .ambient-ring {
+    position: absolute;
+    top: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 340px;
+    height: 8px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #D4A056, #C47A4A, #D4A056);
+    box-shadow: 0 0 24px rgba(212, 160, 86, 0.4);
+  }
+  
+  .ambient-ring::after {
+    content: "氛围灯 · 待评估";
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    white-space: nowrap;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  
+  .plant-pot {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 100px;
+  }
+  
+  .diagram-legend {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    justify-content: center;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--ink-light);
+  }
+  
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+  }
+  
+  .dot-main { background: var(--primary); }
+  .dot-ambient { background: var(--accent); }
+  .dot-conflict { background: var(--caution); }
+  
+  .question-card {
+    margin-top: 28px;
+    padding: 20px 24px;
+    background: rgba(196, 122, 74, 0.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+  }
+  
+  .question-card .label {
+    margin-bottom: 8px;
+  }
+  
+  .question-card .question {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--accent);
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+  <div class="page-masthead">
+    <div class="logo">植物 grower · 需求分析</div>
+    <div class="meta">03 / 产品目标与约束</div>
+  </div>
+  
+  <div class="page-content">
+    <div class="kicker">问题定义</div>
+    <h2>我们到底在分析什么？</h2>
+    
+    <div class="constraint-layout">
+      <div class="left-col">
+        <table class="constraint-table">
+          <tr>
+            <td>产品名称</td>
+            <td>室内智能植物种植机的植物照射灯</td>
+          </tr>
+          <tr>
+            <td>一句话描述</td>
+            <td>为家庭场景提供植物生长补光，现考虑叠加可调色温/全彩氛围灯</td>
+          </tr>
+          <tr>
+            <td>目标用户</td>
+            <td>都市家庭、植物爱好者、新手种植者、厨房种植用户、注重家居氛围的中产家庭</td>
+          </tr>
+          <tr>
+            <td>价格带</td>
+            <td>中端主流 $80–$180；高端 $180–$350</td>
+          </tr>
+          <tr>
+            <td>时间约束</td>
+            <td>下一代产品迭代，6–9 个月量产窗口</td>
+          </tr>
+          <tr>
+            <td>技术边界</td>
+            <td>主灯补光功能不能劣化；散热/寿命/认证风险可控；可接受 BOM 增量 ¥10–30/台</td>
+          </tr>
+          <tr>
+            <td>分析议题</td>
+            <td>是否需要在植物照射灯上增加氛围灯功能？</td>
+          </tr>
+        </table>
+      </div>
+      
+      <div class="right-col">
+        <div class="constraint-visual">
+          <div class="diagram-title">产品结构示意</div>
+          
+          <div class="device-diagram">
+            <div class="diagram-box">
+              <div class="ambient-ring"></div>
+              <div class="main-lamp"></div>
+              <div class="light-beam"></div>
+              <svg class="plant-pot" viewBox="0 0 120 100" fill="none">
+                <path d="M10 40 L110 40 L95 95 L25 95 Z" fill="#C47A4A" opacity="0.85"/>
+                <ellipse cx="60" cy="40" rx="50" ry="8" fill="#A05A35"/>
+                <path d="M55 40 Q50 15 35 5 Q55 18 60 38 Q70 15 90 8 Q70 25 65 40 Z" fill="#2D5A3D"/>
+              </svg>
+            </div>
+            
+            <div class="diagram-legend">
+              <div class="legend-item">
+                <div class="legend-dot dot-main"></div>
+                <span>主灯 · 必须保证</span>
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot dot-ambient"></div>
+                <span>氛围灯 · 待评估</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="question-card">
+            <div class="label">核心问题</div>
+            <div class="question">氛围灯是「锦上添花」还是「必备功能」？是否值得承担技术、商业与品牌风险？</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div>植物照射灯氛围灯功能需求分析</div>
+    <div>03 / 11</div>
+  </div>
+</body>
+</html>

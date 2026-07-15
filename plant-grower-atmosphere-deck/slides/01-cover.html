@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>01 · 封面</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .cover-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    background: var(--paper);
+  }
+  
+  .cover-illustration {
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 760px;
+    height: 760px;
+    opacity: 0.85;
+  }
+  
+  .cover-illustration svg {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .cover-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 120px;
+    max-width: 1100px;
+  }
+  
+  .cover-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 40px;
+  }
+  
+  .cover-kicker::before {
+    content: "";
+    width: 48px;
+    height: 2px;
+    background: var(--primary);
+  }
+  
+  .cover-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 104px;
+    line-height: 1.05;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.03em;
+  }
+  
+  .cover-title .accent-word {
+    color: var(--primary);
+    display: block;
+  }
+  
+  .cover-subtitle {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 32px;
+    color: var(--ink-light);
+    margin-top: 36px;
+    line-height: 1.5;
+  }
+  
+  .cover-divider {
+    width: 120px;
+    height: 3px;
+    background: var(--accent);
+    margin: 48px 0;
+  }
+  
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    font-size: 15px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+  
+  .cover-meta span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .cover-meta .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+  }
+  
+  .cover-ambient {
+    position: absolute;
+    bottom: 120px;
+    right: 120px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 160, 86, 0.15) 0%, rgba(212, 160, 86, 0) 70%);
+    filter: blur(20px);
+  }
+</style>
+</head>
+<body>
+  <div class="cover-page">
+    <div class="cover-ambient"></div>
+    <div class="cover-illustration">
+      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- 植物灯主体 -->
+        <rect x="120" y="60" width="160" height="24" rx="8" fill="#2D5A3D" opacity="0.9"/>
+        <rect x="140" y="84" width="120" height="16" rx="4" fill="#1A1A17" opacity="0.15"/>
+        <!-- 光柱 -->
+        <path d="M135 110 L105 260 L175 260 Z" fill="url(#growLight)" opacity="0.25"/>
+        <path d="M265 110 L295 260 L225 260 Z" fill="url(#growLight)" opacity="0.25"/>
+        <path d="M160 110 L145 260 L255 260 Z" fill="url(#growLight)" opacity="0.18"/>
+        <!-- 植物 -->
+        <path d="M180 260 Q170 220 150 200 Q180 210 190 240 Q210 190 240 180 Q220 220 210 260 Z" fill="#4A7A5C"/>
+        <path d="M200 260 Q205 210 225 190 Q210 215 195 245 Q180 200 160 195 Q185 220 185 260 Z" fill="#2D5A3D"/>
+        <path d="M185 260 L185 320" stroke="#6B4A3A" stroke-width="6" stroke-linecap="round"/>
+        <!-- 花盆 -->
+        <path d="M150 320 L250 320 L235 380 L165 380 Z" fill="#C47A4A" opacity="0.85"/>
+        <ellipse cx="200" cy="320" rx="50" ry="8" fill="#A05A35"/>
+        <!-- 氛围光晕 -->
+        <circle cx="200" cy="340" r="90" fill="url(#ambientGlow)" opacity="0.4"/>
+        <circle cx="200" cy="340" r="60" fill="url(#ambientGlow)" opacity="0.25"/>
+        
+        <defs>
+          <linearGradient id="growLight" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#D4A056" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#D4A056" stop-opacity="0"/>
+          </linearGradient>
+          <radialGradient id="ambientGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#D4A056" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#D4A056" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+    <div class="cover-content">
+      <div class="cover-kicker">多 Agent 需求分析</div>
+      <h1 class="cover-title">
+        植物照射灯
+        <span class="accent-word">氛围灯功能</span>
+        需求分析
+      </h1>
+      <div class="cover-subtitle">基于用户、技术、商业、竞品四视角交叉校验的可视化结论</div>
+      <div class="cover-divider"></div>
+      <div class="cover-meta">
+        <span><i class="dot"></i> 2026.07.15</span>
+        <span><i class="dot"></i> 硬件产品 PRD 前分析</span>
+        <span><i class="dot"></i> 植物 grower 产品组</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

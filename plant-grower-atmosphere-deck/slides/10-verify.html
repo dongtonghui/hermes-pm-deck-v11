@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 · 验证计划</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .verify-page { width: 100%; height: 100%; display: flex; flex-direction: column; }
+  
+  .verify-layout {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    flex: 1;
+    margin-top: 24px;
+  }
+  
+  .timeline {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .timeline-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 28px;
+  }
+  
+  .timeline-track {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-left: 40px;
+  }
+  
+  .timeline-track::before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: var(--border);
+  }
+  
+  .timeline-item {
+    position: relative;
+    padding: 16px 0;
+  }
+  
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -34px;
+    top: 22px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid var(--primary);
+    z-index: 2;
+  }
+  
+  .timeline-item.phase-2::before { border-color: var(--accent); }
+  .timeline-item.phase-3::before { border-color: var(--highlight); }
+  
+  .timeline-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .timeline-week {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 100px;
+  }
+  
+  .week-p0 { background: rgba(45, 90, 61, 0.1); color: var(--primary); }
+  .week-p1 { background: rgba(196, 122, 74, 0.1); color: var(--accent); }
+  .week-p2 { background: rgba(212, 160, 86, 0.12); color: #8A6A2E; }
+  
+  .timeline-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+  }
+  
+  .timeline-desc {
+    font-size: 14px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+  
+  .go-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .go-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .go-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 auto 0;
+  }
+  
+  .go-list li {
+    font-size: 16px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    padding: 14px 0;
+    padding-left: 28px;
+    position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .go-list li:last-child { border-bottom: none; }
+  
+  .go-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  
+  .go-banner {
+    margin-top: 24px;
+    padding: 22px 24px;
+    background: rgba(45, 90, 61, 0.06);
+    border-radius: 12px;
+    border-left: 3px solid var(--primary);
+  }
+  
+  .go-banner .label {
+    margin-bottom: 8px;
+  }
+  
+  .go-banner .text {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--primary);
+    line-height: 1.5;
+    font-weight: 700;
+  }
+  
+  .metrics-card {
+    grid-column: 1 / -1;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+  
+  .metrics-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  
+  .metric-card {
+    padding: 18px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.02);
+  }
+  
+  .metric-card .name {
+    font-size: 13px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  
+  .metric-card .target {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--primary);
+  }
+  
+  .metric-card .unit {
+    font-size: 13px;
+    color: var(--ink-light);
+    margin-top: 4px;
+  }
+</style>
+</head>
+<body>
+  <div class="page-masthead">
+    <div class="logo">植物 grower · 需求分析</div>
+    <div class="meta">10 / 验证计划</div>
+  </div>
+  
+  <div class="page-content">
+    <div class="kicker">下一步验证 · 6 项工作，2–12 周</div>
+    <h2>通过验证建立决策门，不凭直觉放量</h2>
+    
+    <div class="verify-layout">
+      <div class="timeline">
+        <div class="timeline-title">验证路线图</div>
+        
+        <div class="timeline-track">
+          <div class="timeline-item">
+            <div class="timeline-header">
+              <span class="timeline-week week-p0">P0 · 4–6 周</span>
+              <span class="timeline-name">用户研究与价格测试</span>
+            </div>
+            <div class="timeline-desc">问卷 500+ 样本 + 焦点小组 3 组 + 价格测试（Gabor-Granger / Van Westendorp）</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-header">
+              <span class="timeline-week week-p0">P0 · 6–8 周</span>
+              <span class="timeline-name">光谱安全与植物光周期实验</span>
+            </div>
+            <div class="timeline-desc">暗期干扰实验、光谱 PPFD 测量、发芽/生长/开花指标对比</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-header">
+              <span class="timeline-week week-p0">P0 · 6–8 周</span>
+              <span class="timeline-name">技术 PoC 与精确 BOM</span>
+            </div>
+            <div class="timeline-desc">独立灯带方案打样、散热/寿命测试、供应商询价 3 家+</div>
+          </div>
+          
+          <div class="timeline-item phase-2">
+            <div class="timeline-header">
+              <span class="timeline-week week-p1">P1 · 2–3 周</span>
+              <span class="timeline-name">法规认证梳理</span>
+            </div>
+            <div class="timeline-desc">安规、EMC、光生物安全、RoHS 等测试要求与预算确认</div>
+          </div>
+          
+          <div class="timeline-item phase-2">
+            <div class="timeline-header">
+              <span class="timeline-week week-p1">P1 · 3–4 周</span>
+              <span class="timeline-name">竞品深度拆解</span>
+            </div>
+            <div class="timeline-desc">销量、评论关键词、价格、售后反馈、产品迭代方向</div>
+          </div>
+          
+          <div class="timeline-item phase-2">
+            <div class="timeline-header">
+              <span class="timeline-week week-p1">P1 · 2–3 周</span>
+              <span class="timeline-name">可复核财务模型</span>
+            </div>
+            <div class="timeline-desc">敏感性与情景分析（销量、溢价、BOM 三变量）</div>
+          </div>
+          
+          <div class="timeline-item phase-3">
+            <div class="timeline-header">
+              <span class="timeline-week week-p2">P1 · 8–12 周</span>
+              <span class="timeline-name">小批量电商试点</span>
+            </div>
+            <div class="timeline-desc">100–500 台试点，收集转化、退货、NPS、评论，再设 Go/No-Go 决策门</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="go-card">
+        <div class="go-title">决策门 · Go/No-Go 标准</div>
+        
+        <ul class="go-list">
+          <li><strong>Go 标准：</strong> 用户研究中 30%+ 目标人群愿为氛围灯付费 ≥$15 溢价，且光谱安全验证无显著影响</li>
+          <li><strong>Go 标准：</strong> 财务模型在保守销量下仍有正 ROI，且 BOM 控制在 ¥30 以内</li>
+          <li><strong>No-Go 标准：</strong> 核心种植用户反感率 >15%，或光周期实验出现负面指标</li>
+          <li><strong>No-Go 标准：</strong> 电商试点退货率显著高于基础款，或 NPS 下降</li>
+        </ul>
+        
+        <div class="go-banner">
+          <div class="label">决策门</div>
+          <div class="text">
+            所有 P0 验证通过前，不承诺全系标配；试点数据未达 Go 标准，氛围灯项目停止或继续收窄范围。
+          </div>
+        </div>
+      </div>
+      
+      <div class="metrics-card">
+        <div class="metrics-title">试点成功指标（KPI）</div>
+        
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="name">溢价转化率</div>
+            <div class="target">≥ 15%</div>
+            <div class="unit">含氛围灯 SKU 销量占比</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="name">退货率增量</div>
+            <div class="target">≤ 2pp</div>
+            <div class="unit">相对基础款不显著增加</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="name">NPS</div>
+            <div class="target">≥ +5</div>
+            <div class="unit">氛围灯用户 NPS 高于基础款</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="name">差评关键词</div>
+            <div class="target">< 5%</div>
+            <div class="unit">关于灯光/质量/干扰的差评占比</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div>植物照射灯氛围灯功能需求分析</div>
+    <div>10 / 11</div>
+  </div>
+</body>
+</html>

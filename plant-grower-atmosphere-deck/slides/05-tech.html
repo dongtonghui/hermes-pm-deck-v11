@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05 · 技术视角</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .tech-page { width: 100%; height: 100%; display: flex; flex-direction: column; }
+  
+  .tech-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    flex: 1;
+    margin-top: 24px;
+  }
+  
+  .solution-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .solution-card.recommended {
+    border-color: rgba(45, 90, 61, 0.3);
+  }
+  
+  .solution-card.risky {
+    border-color: rgba(181, 74, 58, 0.2);
+  }
+  
+  .solution-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .solution-badge {
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  
+  .badge-recommended { background: rgba(45, 90, 61, 0.1); color: var(--primary); }
+  .badge-risky { background: rgba(181, 74, 58, 0.08); color: var(--caution); }
+  
+  .solution-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 28px;
+  }
+  
+  .solution-desc {
+    font-size: 16px;
+    color: var(--ink-light);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  
+  .metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    flex: 1;
+  }
+  
+  .metric-item {
+    background: rgba(0,0,0,0.02);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  
+  .metric-label {
+    font-size: 12px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  
+  .metric-value {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    color: var(--ink);
+  }
+  
+  .metric-value.good { color: var(--primary); }
+  .metric-value.bad { color: var(--caution); }
+  
+  .metric-note {
+    font-size: 12px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+  
+  .impact-section {
+    grid-column: 1 / -1;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+  
+  .impact-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+  
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  .impact-item {
+    text-align: center;
+    padding: 20px 16px;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.02);
+  }
+  
+  .impact-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    font-size: 20px;
+    font-family: var(--font-display);
+    font-weight: 700;
+  }
+  
+  .impact-item.positive .impact-icon { background: rgba(45, 90, 61, 0.08); color: var(--primary); }
+  .impact-item.negative .impact-icon { background: rgba(181, 74, 58, 0.08); color: var(--caution); }
+  .impact-item.neutral .impact-icon { background: rgba(154, 154, 147, 0.12); color: var(--ink-muted); }
+  
+  .impact-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  
+  .impact-status {
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+  
+  .impact-status.good { color: var(--primary); font-weight: 600; }
+  .impact-status.bad { color: var(--caution); font-weight: 600; }
+  
+  .uncertainty-bar {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 24px;
+    background: rgba(212, 160, 86, 0.06);
+    border-radius: 12px;
+    border-left: 3px solid var(--highlight);
+  }
+  
+  .uncertainty-bar .icon {
+    font-size: 20px;
+  }
+  
+  .uncertainty-bar .text {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+  
+  .uncertainty-bar .text strong {
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+  <div class="page-masthead">
+    <div class="logo">植物 grower · 需求分析</div>
+    <div class="meta">05 / 技术视角</div>
+  </div>
+  
+  <div class="page-content">
+    <div class="kicker">技术视角 · 风险可控的方案 A 优先</div>
+    <h2>独立灯带风险低，主灯扩展风险高</h2>
+    
+    <div class="tech-layout">
+      <div class="solution-card recommended">
+        <div class="solution-header">
+          <span class="solution-badge badge-recommended">推荐方案</span>
+        </div>
+        <div class="solution-title">方案 A：独立氛围灯带</div>
+        <div class="solution-desc">在主灯外圈或机身边缘独立布置 RGB/W 灯带，与主灯物理/电路隔离，独立控制。</div>
+        
+        <div class="metric-grid">
+          <div class="metric-item">
+            <div class="metric-label">BOM 增量</div>
+            <div class="metric-value good">¥10–30</div>
+            <div class="metric-note">/台 · 含摊薄后</div>
+          </div>
+          
+          <div class="metric-item">
+            <div class="metric-label">散热影响</div>
+            <div class="metric-value good">小</div>
+            <div class="metric-note">功率 1–5W</div>
+          </div>
+          
+          <div class="metric-item">
+            <div class="metric-label">主功能干扰</div>
+            <div class="metric-value good">极小</div>
+            <div class="metric-note">独立光学窗口</div>
+          </div>
+          
+          <div class="metric-item">
+            <div class="metric-label">认证复测</div>
+            <div class="metric-value">¥6.5–23万</div>
+            <div class="metric-note">周期 6–12 周</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="solution-card risky">
+        <div class="solution-header">
+          <span class="solution-badge badge-risky">不推荐</span>
+        </div>
+        <div class="solution-title">方案 B：主灯扩展色温/全彩</div>
+        <div class="solution-desc">主灯 LED 模组增加暖白/冷白/RGB 芯片，通过调光算法混色，与主灯共用光学窗口。</div>
+        
+        <div class="metric-grid">
+          <div class="metric-item">
+            <div class="metric-label">BOM 增量</div>
+            <div class="metric-value bad">¥25–75</div>
+            <div class="metric-note">/台 · 更高</div>
+          </div>
+          
+          <div class="metric-item">
+            <div class="metric-label">散热影响</div>
+            <div class="metric-value bad">大</div>
+            <div class="metric-note">结温升 8–15°C</div>
+          </div>
+          
+          <div class="metric-item">
+            <div class="metric-label">主灯寿命</div>
+            <div class="metric-value bad">-20~40%</div>
+            <div class="metric-note">可能缩短</div>
+          </div>
+          
+          <div class="metric-item">
+            <div class="metric-label">光谱干扰</div>
+            <div class="metric-value bad">有</div>
+            <div class="metric-note">影响 PPFD/均匀性</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="impact-section">
+        <div class="impact-title">关键影响维度</div>
+        
+        <div class="impact-grid">
+          <div class="impact-item positive">
+            <div class="impact-icon">✓</div>
+            <div class="impact-name">技术可行性</div>
+            <div class="impact-status good">方案 A 成熟</div>
+          </div>
+          
+          <div class="impact-item neutral">
+            <div class="impact-icon">⚡</div>
+            <div class="impact-name">能耗增加</div>
+            <div class="impact-status">+10–50元/年</div>
+          </div>
+          
+          <div class="impact-item negative">
+            <div class="impact-icon">!</div>
+            <div class="impact-name">认证复测</div>
+            <div class="impact-status bad">安规/EMC/光生物</div>
+          </div>
+          
+          <div class="impact-item neutral">
+            <div class="impact-icon">⚙</div>
+            <div class="impact-name">制造复杂度</div>
+            <div class="impact-status">新增 1–2 工序</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="uncertainty-bar">
+        <span class="icon">⚠</span>
+        <div class="text">
+          <strong>不确定项：</strong>实际 BOM 需供应商询价；植物光周期影响需实测；认证费用因地区和机构差异大；高湿环境下灯带长期可靠性待验证。
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div>植物照射灯氛围灯功能需求分析</div>
+    <div>05 / 11</div>
+  </div>
+</body>
+</html>

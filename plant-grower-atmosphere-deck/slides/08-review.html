@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>08 · 交叉校验</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/tokens.css">
+<style>
+  .review-page { width: 100%; height: 100%; display: flex; flex-direction: column; }
+  
+  .review-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    flex: 1;
+    margin-top: 24px;
+  }
+  
+  .review-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 20px var(--shadow);
+  }
+  
+  .review-card-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .review-card-title .icon {
+    font-size: 20px;
+  }
+  
+  .review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .review-list li {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-light);
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    padding-left: 24px;
+    position: relative;
+  }
+  
+  .review-list li:last-child { border-bottom: none; }
+  
+  .review-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  
+  .review-list li strong {
+    color: var(--ink);
+  }
+  
+  .omissions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  
+  .omission-item {
+    padding: 16px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.02);
+  }
+  
+  .omission-item .title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  
+  .omission-item .desc {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+  
+  .verdict-card {
+    grid-column: 1 / -1;
+    background: rgba(45, 90, 61, 0.06);
+    border: 2px solid rgba(45, 90, 61, 0.2);
+    border-radius: 16px;
+    padding: 32px;
+  }
+  
+  .verdict-card .title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 26px;
+    color: var(--primary);
+    margin-bottom: 16px;
+  }
+  
+  .verdict-card .reasons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .verdict-card .reasons li {
+    font-size: 15px;
+    color: var(--ink-light);
+    line-height: 1.5;
+    padding-left: 22px;
+    position: relative;
+  }
+  
+  .verdict-card .reasons li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  
+  .verdict-card .path {
+    margin-top: 20px;
+    padding: 18px 20px;
+    background: white;
+    border-radius: 10px;
+    border-left: 3px solid var(--primary);
+  }
+  
+  .verdict-card .path .label {
+    margin-bottom: 6px;
+  }
+  
+  .verdict-card .path .text {
+    font-size: 18px;
+    color: var(--ink);
+    line-height: 1.5;
+    font-weight: 600;
+  }
+  
+  .review-card .highlight {
+    color: var(--caution);
+    font-weight: 700;
+  }
+  
+  .review-card .warn { color: var(--caution); }
+  .review-card .info { color: var(--accent); }
+  .review-card .ok { color: var(--primary); }
+</style>
+</head>
+<body>
+  <div class="page-masthead">
+    <div class="logo">植物 grower · 需求分析</div>
+    <div class="meta">08 / 交叉校验</div>
+  </div>
+  
+  <div class="page-content">
+    <div class="kicker">交叉校验 · 资深产品评审</div>
+    <h2>四份视角相互矛盾，证据与 ROI 均需再验证</h2>
+    
+    <div class="review-layout">
+      <div class="review-card">
+        <div class="review-card-title">
+          <span class="icon warn">⚠</span>
+          矛盾点
+        </div>
+        
+        <ul class="review-list">
+          <li><strong>需求强度冲突：</strong> 用户视角认为核心人群不敏感，商业视角却给出 72% ROI 的强乐观结论，用户基数未明确。</li>
+          <li><strong>技术路线与商业方案冲突：</strong> 技术推荐独立灯带；商业「可调色温」未明确实现方式，若通过主灯扩展则风险剧增。</li>
+          <li><strong>ROI 与风险冲突：</strong> 72% ROI 与「溢价不被接受」的风险并存，缺少敏感性分析。</li>
+          <li><strong>竞品保守与差异化机会冲突：</strong> 专业品牌未做 RGB，但小米/白牌在做，市场分层未统一回答。</li>
+        </ul>
+      </div>
+      
+      <div class="review-card">
+        <div class="review-card-title">
+          <span class="icon info">◎</span>
+          主要漏洞
+        </div>
+        
+        <ul class="review-list">
+          <li><strong>用户视角：</strong> 定性多，缺乏定量样本、价格弹性与真实场景数据。</li>
+          <li><strong>技术视角：</strong> BOM 范围过宽（¥10–30 差 3 倍），无实测；认证成本未按销量摊销。</li>
+          <li><strong>商业视角：</strong> ROI 无公式、无假设披露；电商接受度无证据；未评估品牌定位风险。</li>
+          <li><strong>竞品视角：> 描述性结论多，缺少销量、评价、溢价、故障率的因果分析。</li>
+        </ul>
+      </div>
+      
+      <div class="review-card">
+        <div class="review-card-title">
+          <span class="icon ok">+\u003c/span>
+          遗漏视角
+        </div>
+        
+        <div class="omissions-grid">
+          <div class="omission-item">
+            <div class="title">法规合规</div>
+            <div class="desc">光生物安全、EMC、低电压指令、RoHS</div>
+          </div>
+          
+          <div class="omission-item">
+            <div class="title">制造供应链</div>
+            <div class="desc">供应商 MOQ、产线改造、装配工时</div>
+          </div>
+          
+          <div class="omission-item">
+            <div class="title">售后与品牌</div>
+            <div class="desc">退货率、NPS、保修成本、品牌定位稀释</div>
+          </div>
+          
+          <div class="omission-item">
+            <div class="title">财务全景</div>
+            <div class="desc">机会成本、库存风险、SKU 复杂度</div>
+          </div>
+          
+          <div class="omission-item">
+            <div class="title">生态协同</div>
+            <div class="desc">米家/HomeKit/Matter 是否打通</div>
+          </div>
+          
+          <div class="omission-item">
+            <div class="title">光谱生理学</div>
+            <div class="desc">夜间低强度光对植物光周期影响</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="verdict-card">
+        <div class="title">最终判断：暂缓全系标配，先验证再做高端/可选 SKU</div>
+        
+        <ul class="reasons">
+          <li>需求证据薄弱，核心与家居人群规模、付费意愿未量化</li>
+          <li>技术方案与商业方案未对齐，「可调色温」实现方式存疑</li>
+          <li>ROI 72% 是单点乐观估算，无可复核公式与敏感性分析</li>
+          <li>竞品信号保守，专业品牌对光周期干扰持谨慎态度</li>
+          <li>法规、制造、售后、品牌定位等关键维度未充分评估</li>
+        </ul>
+        
+        <div class="path">
+          <div class="label">可行路径</div>
+          <div class="text">
+            在补齐用户付费意愿、光谱安全、财务模型和制造验证后，以「低亮度、独立可控的暖白/可调色温」作为高端/可选 SKU 验证，RGB 全彩暂缓。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page-footer">
+    <div>植物照射灯氛围灯功能需求分析</div>
+    <div>08 / 11</div>
+  </div>
+</body>
+</html>
