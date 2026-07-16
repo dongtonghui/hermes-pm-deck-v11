@@ -13,11 +13,11 @@
   .header .subtitle { font-size: 28px; color: var(--ink-secondary); max-width: 960px; }
   .timeline { display: flex; gap: 20px; position: relative; }
   .timeline::before { content: ""; position: absolute; top: 36px; left: 50px; right: 50px; height: 4px; background: var(--line); z-index: 0; }
-  .step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
-  .step-num { width: 72px; height: 72px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 28px; font-weight: 700; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(196,92,38,0.3); }
-  .step-content { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; width: 100%; box-shadow: 0 4px 20px rgba(28,27,24,0.05); }
+  .step { flex: 1; display: flex; flex-direction: column; align-items: stretch; position: relative; z-index: 1; }
+  .step-num { align-self: center; width: 72px; height: 72px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-en); font-size: 28px; font-weight: 700; margin-bottom: 24px; box-shadow: 0 8px 24px rgba(196,92,38,0.3); }
+  .step-content { flex: 1; display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; width: 100%; box-shadow: 0 4px 20px rgba(28,27,24,0.05); }
   .step-content h4 { font-family: var(--font-body); font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--ink); text-align: center; }
-  .step-content ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .step-content ul { list-style: none; flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 8px; }
   .step-content li { font-size: var(--tiny); line-height: 1.5; color: var(--ink-secondary); padding-left: 14px; position: relative; }
   .step-content li::before { content: "—"; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
   .data-point { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: var(--tiny); color: var(--accent-dark); font-weight: 600; text-align: center; }
