@@ -14,6 +14,56 @@
   .download-card h4 { font-family: var(--font-body); font-size: 22px; margin-bottom: 12px; }
   .download-card p { font-size: var(--tiny); color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 16px; }
   .download-card a { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: var(--accent); color: #fff; border-radius: 999px; text-decoration: none; font-size: var(--tiny); font-weight: 600; }
+  
+  .download-row { display: inline-flex; align-items: center; gap: 12px; position: relative; }
+  
+  .hint-trigger {
+    position: relative;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 14px; font-weight: 700; font-family: var(--font-body);
+    display: flex; align-items: center; justify-content: center;
+    cursor: help; user-select: none;
+  }
+  
+  .hint-trigger:hover,
+  .hint-trigger:focus-visible { background: var(--accent); border-color: var(--accent); }
+  
+  .hint-popover {
+    position: absolute;
+    left: 36px; top: 50%;
+    transform: translateY(-50%);
+    width: 360px;
+    padding: 14px 18px;
+    background: #fff; color: var(--ink);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    font-size: 13px; line-height: 1.6; font-weight: 400;
+    opacity: 0; pointer-events: none; visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 10;
+  }
+  
+  .hint-popover strong { color: var(--primary); font-weight: 700; }
+  .hint-popover em { color: var(--accent); font-style: normal; font-weight: 600; }
+  
+  .hint-trigger:hover .hint-popover,
+  .hint-trigger:focus-within .hint-popover {
+    opacity: 1; pointer-events: auto; visibility: visible;
+  }
+  
+  .hint-popover::before {
+    content: '';
+    position: absolute;
+    left: -6px; top: 50%;
+    transform: translateY(-50%);
+    border-width: 6px 6px 6px 0;
+    border-style: solid;
+    border-color: transparent #fff transparent transparent;
+  }
   .right { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 36px; box-shadow: 0 6px 24px rgba(28,27,24,0.06); }
   .checklist { list-style: none; display: flex; flex-direction: column; gap: 14px; }
   .checklist li { display: flex; gap: 16px; align-items: flex-start; font-size: var(--small); color: var(--ink-secondary); line-height: 1.55; }
@@ -160,7 +210,17 @@
       <div class="download-card">
         <h4>Skill 设计清单</h4>
         <p>包含 Anthropic SKILL.md 标准模板、Hermes 扩展说明、以及一个完整示例。</p>
-        <a href="../assets/skill-design-checklist.md" download>下载清单（MD）</a>
+        <div class="download-row">
+          <a href="../assets/skill-design-checklist.md" download>下载清单（MD）</a>
+          <span class="hint-trigger" aria-describedby="skill-hint">!
+            <span class="hint-popover" id="skill-hint" role="tooltip">
+              <strong>怎么用？</strong><br>
+              把下载的 .md 清单文件发给你的 AI（如 Claude、ChatGPT、Hermes 等），告诉它：<br>
+              <em>"请基于这份清单，帮我生成一个符合 SKILL.md 规范的 Skill 文件。"</em><br>
+              即可把你的工作流封装成长期可复用的 AI 能力。
+            </span>
+          </span>
+        </div>
       </div>
     </div>
 
