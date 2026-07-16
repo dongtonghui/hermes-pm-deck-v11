@@ -14,6 +14,56 @@
   .download-card h4 { font-family: var(--font-body); font-size: 22px; margin-bottom: 12px; }
   .download-card p { font-size: var(--tiny); color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 16px; }
   .download-card a { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: var(--accent); color: #fff; border-radius: 999px; text-decoration: none; font-size: var(--tiny); font-weight: 600; }
+  
+  .download-row { display: inline-flex; align-items: center; gap: 12px; position: relative; }
+  
+  .hint-trigger {
+    position: relative;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    font-size: 14px; font-weight: 700; font-family: var(--font-body);
+    display: flex; align-items: center; justify-content: center;
+    cursor: help; user-select: none;
+  }
+  
+  .hint-trigger:hover,
+  .hint-trigger:focus-visible { background: var(--accent); border-color: var(--accent); }
+  
+  .hint-popover {
+    position: absolute;
+    left: 36px; top: 50%;
+    transform: translateY(-50%);
+    width: 360px;
+    padding: 14px 18px;
+    background: #fff; color: var(--ink);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    font-size: 13px; line-height: 1.6; font-weight: 400;
+    opacity: 0; pointer-events: none; visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 10;
+  }
+  
+  .hint-popover strong { color: var(--primary); font-weight: 700; }
+  .hint-popover em { color: var(--accent); font-style: normal; font-weight: 600; }
+  
+  .hint-trigger:hover .hint-popover,
+  .hint-trigger:focus-within .hint-popover {
+    opacity: 1; pointer-events: auto; visibility: visible;
+  }
+  
+  .hint-popover::before {
+    content: '';
+    position: absolute;
+    left: -6px; top: 50%;
+    transform: translateY(-50%);
+    border-width: 6px 6px 6px 0;
+    border-style: solid;
+    border-color: transparent #fff transparent transparent;
+  }
   .right { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 36px; box-shadow: 0 6px 24px rgba(28,27,24,0.06); }
   .template-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
   .template-header h4 { font-family: var(--font-body); font-size: 22px; }
@@ -162,7 +212,17 @@
       <div class="download-card">
         <h4>多个 Agent 需求分析模板</h4>
         <p>包含 4 个角色 Agent 的 Prompt、交叉校验流程、输出框架。可直接复制到你的 AI 工具中使用。</p>
-        <a href="../assets/multi-agent-analysis-template.md" download>下载模板（MD）</a>
+        <div class="download-row">
+          <a href="../assets/multi-agent-analysis-template.md" download>下载模板（MD）</a>
+          <span class="hint-trigger" aria-describedby="template-hint">!
+            <span class="hint-popover" id="template-hint" role="tooltip">
+              <strong>怎么用？</strong><br>
+              把下载的 .md 模板文件发给你的 AI（如 Claude、ChatGPT、Hermes 等），告诉它：<br>
+              <em>"请基于这份模板，帮我做成一个可复用的需求分析 Skill / 智能体。"</em><br>
+              即可把一次性的分析流程封装成长期可用的能力。
+            </span>
+          </span>
+        </div>
       </div>
     </div>
 
